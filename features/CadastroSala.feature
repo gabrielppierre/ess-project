@@ -21,3 +21,4 @@ And ela clica no botão "Salvar nova sala",,
 Then o sistema detecta que a sala "Sala A22" já está cadastrada,
 And o sistema exibe uma mensagem de erro "Erro: Sala já cadastrada"
 And o sistema não aceita o cadastro duplicado da "Sala A22"
+Then yas.
