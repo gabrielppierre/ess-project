@@ -40,3 +40,14 @@ Cenário 4: Atualização de reserva bem sucedida
     AND preencho “Aula de zumba” como atividade
     THEN eu volto para a página “reserva de salas”
     AND eu posso ver que a sala "D002" está reservada para o horário "13h-15h" na data "16/05/24" com a atividade “Aula de zumba”
+
+Cenário 5: Atualização de reserva dados incompletos
+
+    GIVEN  que estou na página “reserva de salas”
+    AND estou logado como usuário “Gabriel Vasconcelos”
+    AND vejo que a sala “D002” está reservada para o horário "13h-15h" na data "16/05/24" com “Aula extra de ESS” como atividade, reservada por “Gabriel Vasconcelos”
+    WHEN eu escolho “Atualizar reserva” para a sala "D002" no horário "13h-15h" na data "16/05/24"
+    AND eu deixo em branco a atividade a preencher
+    THEN eu vejo uma mensagem de erro sobre a atividade estar inalterada 
+    AND eu volto para a página “reserva de salas”
+    AND eu posso ver que a sala "D002" continua reservada para o horário "13h-15h" na data "16/05/24" com a atividade “Aula extra de ESS”
