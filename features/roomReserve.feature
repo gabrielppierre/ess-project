@@ -22,8 +22,8 @@ And eu vejo uma mensagem de "erro" relacionada a "reserva incompleta"
 And eu posso ver que a sala "D002" não está reservada para o horário "13h-15h" na data "16/05/24"
 
 Scenario: Cancelamento de reserva bem sucedida
-Given  que estou na página “reserva de salas”
-And estou logado como usuário “Gabriel Vasconcelos”
+Given estou logado como usuário “Gabriel Vasconcelos”
+And que estou na página “reserva de salas”
 And vejo que a sala “D002” está reservada para o horário "13h-15h" na data "16/05/24" com “Aula extra de ESS” como atividade, reservada por “Gabriel Vasconcelos”
 When eu escolho “Atualizar reserva” para a sala "D002" no horário "13h-15h" na data "16/05/24"
 And seleciono “Cancelar Reserva”
@@ -48,3 +48,13 @@ And eu deixo em branco a atividade a preencher
 Then eu vejo uma mensagem de erro sobre a atividade estar inalterada 
 And eu volto para a página “reserva de salas”
 And eu posso ver que a sala "D002" continua reservada para o horário "13h-15h" na data "16/05/24" com a atividade “Aula extra de ESS”
+
+Scenario: Cancelamento de reserva por outro usuário
+Given  que estou na página “reserva de salas”
+And estou logado como usuário “Gabriel Vasconcelos”
+And vejo que a sala “D002” está reservada para o horário "13h-15h" na data "16/05/24" com “Aula extra de ESS” como atividade, reservada por “Samir Buarque”
+When eu escolho “Atualizar reserva” para a sala "D002" no horário "13h-15h" na data "16/05/24"
+And seleciono “Cancelar Reserva”
+Then eu vejo uma mensagem referente a reserva feita por outra pessoa
+And eu volto para a página “reserva de salas”
+And posso ver que a sala “D002” continua reservada para o horário "13h-15h" na data "16/05/24" com “Aula extra de ESS” como atividade, reservada por “Samir Buarque”
