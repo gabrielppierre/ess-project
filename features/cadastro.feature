@@ -28,3 +28,22 @@ THEN ele deve ver a mensagem "Conta deletada com sucesso"
 AND o usuário deve ser redirecionado para a página inicial
 AND os dados do usuário devem ser removidos do sistema
 
+
+Cenário 1: Adicionar um novo recurso ou equipamento
+
+GIVEN o administrador está na página de "gerenciamento de recursos"
+WHEN o administrador seleciona a opção "Adicionar novo recurso"
+AND o administrador preenche as informações do recurso (nome, descrição, quantidade)
+AND o administrador confirma a adição
+THEN o novo recurso está disponível no sistema
+AND o sistema exibe uma mensagem de sucesso "Recurso adicionado com sucesso"
+
+Cenário 2: Editar um recurso ou equipamento existente
+
+GIVEN o administrador está na página de "gerenciamento de recursos"
+AND existe um recurso chamado "<Recurso>" cadastrado no sistema
+WHEN o administrador seleciona o recurso "<Recurso>" para edição
+AND o administrador modifica as informações do recurso (nome, descrição, quantidade)
+AND o administrador confirma as alterações
+THENo recurso "<Recurso>" tem suas informações atualizadas no sistema
+AND o sistema exibe uma mensagem de sucesso "Recurso atualizado com sucesso"
