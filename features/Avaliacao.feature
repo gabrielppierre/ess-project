@@ -49,7 +49,7 @@ AND: o usuário vai para a edição de reserva
 
 ##Cenário 3
 GIVEN: usuário está na página de "Salas disponíveis"
-AND: o usuário deseja ver as informações de uma sala específica
+AND: usuário deseja ver as informações de uma sala específica
 WHEN: o usuário seleciona a sala que ele quer verificar os dados e informações
 AND: o usuário é levado para a interface gráfica que mostra as informações daquela sala
 AND: o usuário verifica informações de capacidade e equipamentos disponíveis nas salas
