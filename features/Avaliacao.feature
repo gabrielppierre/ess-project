@@ -54,6 +54,5 @@ WHEN: o usuário seleciona a sala que ele quer verificar os dados e informaçõe
 AND: o usuário é levado para a interface gráfica que mostra as informações daquela sala
 AND: o usuário verifica informações de capacidade e equipamentos disponíveis na sala
 AND: o usuário verifica a disponibilidade de horários para reserva
-THEN: o usuário está satisfeito e aperta o botão para voltar para a página anterior
+THEN: o usuário está satisfeito e aperta o botão de retorno
 AND: o usuário retorna para a página de "Salas disponíveis"
-
