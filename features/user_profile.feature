@@ -29,3 +29,4 @@ And a sala “A” está reservada para o usuário “Fulano da Silva Sauro” n
 And o usuário acessa a página “Perfil do usuário”
 When o usuário acessa o menu “Minhas reservas”
 Then é mostrada sala “A” reservada no horário de “14:00” até “16:00”
+And alteração ficticia solicitada no roteiro
