@@ -23,9 +23,9 @@ THEN: o usuário clica no botão “Enviar” para enviar a avaliação
 AND: uma página agradecendo pela avaliação do usuário é mostrada
 AND: a avaliação do usuário é enviada ao sistema e pode ser vista por outros usuários
 
-##Verificação de reservas
+#Verificação de reservas
 
-#Cenário 1:
+##Cenário 1:
 
 GIVEN: o usuário está na página de “Salas reservadas”
 AND: o usuário deseja ver as informações de uma reserva específica
@@ -35,3 +35,11 @@ AND: o usuário verifica informações de data de reserva e localização da sal
 AND: o usuário verifica o tempo de reserva que ele cadastrou
 THEN: o usuário está satisfeito aperta o botão para voltar para a página anterior
 AND: o usuário retorna para a página de “Salas reservadas” 
+
+##Cenário 2
+GIVEN: o usuário <Joao Melo> está na página de "Salas Reservadas"
+AND: o usuário deseja ver as informações de uma reserva específica
+WHEN: o usuário seleciona a rreserva que ele quer verificar os dados e informações
+AND: o usuário visualiza as informações da reserva
+THEN: o usuário nota um erro no horário da reserva
+AND: o usuário vai para a edição de reserva
