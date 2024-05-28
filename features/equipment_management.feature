@@ -29,6 +29,6 @@ And existe um recurso chamado "Projetor" cadastrado no sistema
 And o recurso "Projetor" está associado a uma reserva futura
 When o administrador seleciona a opção "Remover recurso" para o recurso "Projetor"
 And o administrador confirma a remoção
-Then o sistema alerta o administrador que o recurso está associado a uma reserva futura
+Then o sistema alerta o administrador que o recurso não está associado a uma reserva futura
 And o recurso "Projetor" não é removido do sistema
 
