@@ -43,3 +43,14 @@ WHEN: o usuário seleciona a rreserva que ele quer verificar os dados e informa�
 AND: o usuário visualiza as informações da reserva
 THEN: o usuário nota um erro no horário da reserva
 AND: o usuário vai para a edição de reserva
+
+
+##Cenário 3
+GIVEN: o usuário está na página de "Salas disponíveis"
+AND: o usuário deseja ver as informações de uma sala específica
+WHEN: o usuário seleciona a sala que ele quer verificar os dados e informações
+AND: o usuário é levado para a interface gráfica que mostra as informações daquela sala
+AND: o usuário verifica informações de capacidade e equipamentos disponíveis na sala
+AND: o usuário verifica a disponibilidade de horários para reserva
+THEN: o usuário está satisfeito e aperta o botão para voltar para a página anterior
+AND: o usuário retorna para a página de "Salas disponíveis"
