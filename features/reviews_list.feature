@@ -34,3 +34,11 @@ AND existe um review de "João" com o texto "Ótima sala!" e a classificação "
 WHEN o usuário clica em "Útil" no review de "João"
 THEN o sistema exibe uma mensagem informando que o review de "João" foi avaliado como útil
 AND incrementa o contador de avaliações úteis do review de "João" em 1
+
+Scenario: Falha na Adição de um novo review
+GIVEN que o usuário "lipe" está na página da sala "E122"
+WHEN o usuário navega até a seção de reviews da sala
+AND preenche o formulário de adição de review com o texto "Ótima sala!" e a classificação "5 estrelas"
+AND submete o formulário
+AND o sistema detecta que o usuário "lipe" já adicionou um review para a sala "E122"
+THEN o sistema exibe uma mensagem informando que o usuário "lipe" já adicionou um review para a sala "E122"
