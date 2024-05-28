@@ -1,1 +1,1 @@
-Feature: Reservas, Funcionalidade: fazer avaliação das reservas das salas
+Feature: Reservas, Funcionalidade: Fazer avaliação das reservas das salas de aula
