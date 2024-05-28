@@ -22,3 +22,10 @@ And preenche o email “fulanojacadastrado@cin.ufpe.br”
 And submete a alteração
 Then é mostrado uma falha na operação informado que o email já pertence a outro usuário
 And é possível ver o nome “Fulano da Silva Sauro” e o email “fulanodasilva@cin.ufpe.br”
+
+Scenario: Ver minhas reservas
+Given o usuário “Fulano da Silva Sauro” de email “fulanodasilva@cin.ufpe.br” está autenticado na aplicação
+And a sala “A” está reservada para o usuário “Fulano da Silva Sauro” no horário de “14:00” até “16:00”
+And o usuário acessa a página “Perfil do usuário”
+When o usuário acessa o menu “Minhas reservas”
+Then é mostrada sala “A” reservada no horário de “14:00” até “16:00”
