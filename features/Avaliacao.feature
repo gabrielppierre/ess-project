@@ -1,8 +1,8 @@
 Feature: Reservas, Funcionalidade: Fazer avaliação das reservas das salas de aula
 
-Avaliação e review de reservas
+#Avaliação e review de reservas
 
-Cenário 1: avaliação de reservas
+##Cenário 1: avaliação de reservas
 
 GIVEN: o usuário está na página “Fazer uma avaliação de reserva”
 AND: o usuário deseja dar uma nota à experiência de reserva de sala
@@ -12,7 +12,7 @@ THEN: o usuário clica no botão “Enviar” para enviar a avaliação
 AND: uma página agradecendo pela avaliação do usuário é mostrada
 AND: a avaliação do usuário é enviada ao sistema e pode ser vista por outros usuários
 
-Cenário 2: review de reservas
+##Cenário 2: review de reservas
 
 GIVEN: o usuário está na página “Fazer uma avaliação de reserva”
 AND: o usuário deseja dar uma avaliação por escrito à experiência de reserva de sala
@@ -23,3 +23,15 @@ THEN: o usuário clica no botão “Enviar” para enviar a avaliação
 AND: uma página agradecendo pela avaliação do usuário é mostrada
 AND: a avaliação do usuário é enviada ao sistema e pode ser vista por outros usuários
 
+##Verificação de reservas
+
+#Cenário 1:
+
+GIVEN: o usuário está na página de “Salas reservadas”
+AND: o usuário deseja ver as informações de uma reserva específica
+WHEN: o usuário seleciona a reserva que ele quer verificar os dados e informações
+AND: o usuário é levado para a interface gráfica que mostra as informações daquela reserva
+AND: o usuário verifica informações de data de reserva e localização da sala
+AND: o usuário verifica o tempo de reserva que ele cadastrou
+THEN: o usuário está satisfeito aperta o botão para voltar para a página anterior
+AND: o usuário retorna para a página de “Salas reservadas” 
