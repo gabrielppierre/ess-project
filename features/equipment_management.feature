@@ -32,3 +32,8 @@ And o administrador confirma a remoção
 Then o sistema alerta o administrador que o recurso está associado a uma reserva futura
 And o recurso "Projetor" não é removido do sistema
 
+scenario: Visualizar detalhes de um recurso ou equipamento
+GIVEN o administrador está na página de "gerenciamento de recursos"
+AND existe um recurso chamado "projetor" cadastrado no sistema
+WHEN o administrador seleciona o recurso "projetor" para visualizar seus detalhes
+THEN o sistema exibe as informações detalhadas do recurso "projetor" (nome, descrição, quantidade, histórico de uso, etc.)
