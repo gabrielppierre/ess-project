@@ -21,7 +21,7 @@ THEN ele verá uma mensagem “atualizado com sucesso”
 
 Cenário 3: Remoção de conta
 
-GIVEN o usuário está logado e na página de configurações da conta
+Dado o usuário está logado e na página de configurações da conta
 WHEN ele clica no botão "Deletar Conta"
 AND confirma a deleção na janela de confirmação
 THEN ele deve ver a mensagem "Conta deletada com sucesso"
