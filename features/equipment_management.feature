@@ -37,3 +37,9 @@ GIVEN o administrador está na página de "gerenciamento de recursos"
 AND existe um recurso chamado "projetor" cadastrado no sistema
 WHEN o administrador seleciona o recurso "projetor" para visualizar seus detalhes
 THEN o sistema exibe as informações detalhadas do recurso "projetor" (nome, descrição, quantidade, histórico de uso, etc.)
+
+scenario: Visualizar histórico de reservas de um recurso
+Given o administrador está na página de "gerenciamento de recursos"
+And existe um recurso chamado "<Recurso>" registrado no sistema
+When o administrador seleciona o recurso "<Recurso>" para visualizar seu histórico de reservas
+Then o sistema exibe o histórico completo de reservas do recurso "<Recurso>", incluindo datas, horários e finalidades das reservas
