@@ -5,7 +5,7 @@ Feature: Reservas, Funcionalidade: Fazer avaliação das reservas das salas de a
 ##Cenário 1: avaliação de reservas
 
 GIVEN: o usuário está na página “Fazer uma avaliação de reserva”
-AND: o usuário deseja dar uma nota à experiência de reserva de sala
+AND: o usuário deseja dar uma nota à experiência de reserva de salas
 WHEN: o usuário seleciona o campo de notas para dar uma avaliação entre “0 a 5 estrelas”
 AND: o usuário preenche outros campos do formulário de avaliação de reservas
 THEN: o usuário clica no botão “Enviar” para enviar a avaliação
