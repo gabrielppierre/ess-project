@@ -30,3 +30,13 @@ And o usuário acessa a página “Perfil do usuário”
 When o usuário acessa o menu “Minhas reservas”
 Then é mostrada sala “A” reservada no horário de “14:00” até “16:00”
 And alteração ficticia solicitada no roteiro
+
+Scenario: Excluir conta
+Given o usuário “Fulano da Silva Sauro” de email “fulanodasilva@cin.ufpe.br” está autenticado na aplicação
+And o usuário acessa a página “Perfil do usuário”
+When o usuário acessa o menu “Configurações”
+And o usuário seleciona a opção “Deletar conta”
+Then é mostrado uma confirmação para o processo de exclusão
+When o usuário confirma
+Then é exibido um alerta informando que o usuário foi excluído
+And o usuário é redirecionado para a página “Home”
