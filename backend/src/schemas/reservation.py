@@ -2,30 +2,19 @@ from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel
 
-class ReservationCreate(BaseModel):
-    id_room: str
-    id_user: str
-    date_time: datetime
-    room_name: str
-    activity: str
-    teacher: str
+class ReservationModel(BaseModel):
+    room_id: str
+    user_id: str
+    start_time: datetime
+    end_time: datetime
 
-
-class ReservationUpdate(BaseModel):
-    date_time: Optional[datetime]
-    room_name: Optional[str]
-    activity: Optional[str]
-    teacher: Optional[str]
-
-
-class ReservationReturn(BaseModel):
+class ReservationGet(BaseModel):
     id: str
-    id_room: str
-    id_user: str
-    date_time: datetime
-    room_name: str
-    activity: str
-    teacher: str
+    room_id: str
+    user_id: str
+    start_time: datetime
+    end_time: datetime
+    created_at: Optional[datetime]
 
 class ReservationList(BaseModel):
-    items: list[ReservationReturn]
+    reservations: list[ReservationGet]
