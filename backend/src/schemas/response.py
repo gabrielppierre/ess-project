@@ -81,6 +81,24 @@ class HTTPResponses:
             message="Rating created",
             status_code=201,
         )
-
-
-    # TODO: implement other responses (item created, updated, deleted, etc)
+    
+    @staticmethod
+    def RESERVATION_NOT_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Reservation not found",
+            status_code=404,
+        )
+    
+    @staticmethod
+    def RESERVATION_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Reservation found",
+            status_code=200,
+        )
+    
+    @staticmethod
+    def RESERVATION_CREATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Reservation created",
+            status_code=201,
+        )
