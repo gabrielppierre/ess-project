@@ -10,13 +10,13 @@ class ReviewRatingService(ReviewRatingServiceMeta):
       reviews = db.get_items_by_field('review_ratings', 'review_id', review_id)
       if not reviews:
           return HttpResponseModel(
-              message=HTTPResponses.REVIEW_NOT_FOUND().message,
-              status_code=HTTPResponses.REVIEW_NOT_FOUND().status_code,
+              message=HTTPResponses.RATING_NOT_FOUND().message,
+              status_code=HTTPResponses.RATING_NOT_FOUND().status_code,
           )
 
       return HttpResponseModel(
-              message=HTTPResponses.REVIEW_FOUND().message,
-              status_code=HTTPResponses.REVIEW_FOUND().status_code,
+              message=HTTPResponses.RATING_FOUND().message,
+              status_code=HTTPResponses.RATING_FOUND().status_code,
               data=reviews,
           )
 
@@ -25,6 +25,6 @@ class ReviewRatingService(ReviewRatingServiceMeta):
         """Create item method implementation"""
         db.insert_item('review_ratings', rating)
         return HttpResponseModel(
-            message=HTTPResponses.REVIEW_CREATED().message,
-            status_code=HTTPResponses.REVIEW_CREATED().status_code,
+            message=HTTPResponses.RATING_CREATED().message,
+            status_code=HTTPResponses.RATING_CREATED().status_code,
     )
