@@ -5,13 +5,13 @@ from pydantic import BaseModel
 class ReviewRatingModel(BaseModel):
     user_id: str
     review_id: str
-    rating: int
+    liked: bool
 
 class ReviewRatingGet(BaseModel):
     id: str
     user_id: str
     review_id: str
-    rating: int
+    liked: bool
     created_at: Optional[datetime]
 
 class ReviewRatingList(BaseModel):

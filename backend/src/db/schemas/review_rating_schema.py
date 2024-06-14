@@ -18,7 +18,7 @@ class ReviewRatingSchema(ModelSchema):
       "bson_type": "string",
       "description": "The review rating's user identifier"
     },
-    "rating": {
+    "liked": {
       "bson_type": "boolean",
       "description": "The review rating's rating (true for like, false for dislike)"
     },

@@ -6,7 +6,7 @@ def review_rating_entity(rating) -> dict:
         "id": rating["id"],
         "review_id": rating["room_id"],
         "user_id": rating["user_id"],
-        "rating": rating["rating"],
+        "liked": rating["liked"],
         "created_at": rating.get("created_at")
     }
 
@@ -18,7 +18,7 @@ def review_rating_response_entity(rating) -> dict:
         "id": rating["id"],
         "review_id": rating["room_id"],
         "user_id": rating["user_id"],
-        "rating": rating["rating"],
+        "liked": rating["liked"],
         "created_at": rating.get("created_at")
     }
 
