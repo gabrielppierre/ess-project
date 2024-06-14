@@ -40,5 +40,26 @@ class HTTPResponses:
             status_code=500,
         )
 
+    @staticmethod
+    def REVIEW_NOT_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review not found",
+            status_code=404,
+        )
+    
+    @staticmethod
+    def REVIEW_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review found",
+            status_code=200,
+        )
+    
+    @staticmethod
+    def REVIEW_CREATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review created",
+            status_code=201,
+        )
+
 
     # TODO: implement other responses (item created, updated, deleted, etc)
