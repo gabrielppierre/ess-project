@@ -1,7 +1,7 @@
 
 from abc import ABC, abstractmethod
 
-from src.schemas.review import ReviewRatingGet
+from src.schemas.review_rating import ReviewRatingGet
 
 class ReviewRatingServiceMeta(ABC):
 
