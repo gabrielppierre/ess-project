@@ -126,6 +126,30 @@ class Database():
         items = list(collection.find({}, {"_id": 0}))
 
         return items
+    
+    def get_items_by_field(self, collection_name: str, field: str, value: any) -> List[dict]:
+        """
+        Retrieve items from a collection by a specific field and value
+
+        Parameters
+        - collection_name: str
+            The name of the collection to query
+        - field: str
+            The field name to filter by
+        - value: Any
+            The value to filter by
+
+        Returns:
+        - list:
+            A list of items that match the field and value
+
+        """
+        collection: Collection = self.db[collection_name]
+
+        items = list(collection.find({field: value}, {"_id": 0}))
+
+        return items
+
 
     def get_item_by_id(self, collection_name: str, item_id: str) -> dict:
         """
@@ -173,7 +197,7 @@ class Database():
             "id": str(item_id),
             **item
         }
-
+    
     # TODO: implement update_item method
     # def update_item(self, collection_name: str, item_id: str, item: dict) -> dict:
         """

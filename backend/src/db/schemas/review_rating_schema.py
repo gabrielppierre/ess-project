@@ -18,12 +18,19 @@ class ReviewRatingSchema(ModelSchema):
       "bson_type": "string",
       "description": "The review rating's user identifier"
     },
-    "rating": {
-      "bson_type": "int",
-      "description": "The review rating's rating"
+    "liked": {
+      "bson_type": "boolean",
+      "description": "The review rating's rating (true for like, false for dislike)"
     },
     "created_at": {
       "bson_type": "string",
       "description": "The review rating's creation time"
     }
   }
+
+  def get(self) -> dict:
+        return {
+            "bson_type": self.bson_type,
+            "required": self.required,
+            "properties": self.properties
+        }
