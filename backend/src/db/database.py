@@ -227,9 +227,9 @@ class Database():
         return updated_item
 
     # TODO: implement delete_item method
-    # def delete_item(self, collection_name: str, item_id: str) -> list:
+    def delete_item(self, collection_name: str, item_id: str) -> list:
         """
-        Delete an item of a collection
+        Delete an item from a collection
 
         Parameters:
         - collection_name: str
@@ -242,3 +242,12 @@ class Database():
             A list of all items in the collection.
 
         """
+        collection: Collection = self.db[collection_name]
+
+        result = collection.delete_one({"id": item_id})
+
+        if result.deleted_count == 0:
+            raise ValueError(f"Item with id {item_id} not found in collection {collection_name}")
+
+        remaining_items = list(collection.find())
+        return remaining_items
