@@ -102,3 +102,32 @@ class HTTPResponses:
             message="Reservation created",
             status_code=201,
         )
+    
+    @staticmethod
+    def ROOM_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Room found",
+            status_code=200,
+        )
+    
+    @staticmethod
+    def ROOM_NOT_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Room not found",
+            status_code=404,
+        )
+    
+    @staticmethod
+    def ROOM_CREATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Room created",
+            status_code=201,
+        )
+    
+    @staticmethod
+    def ROOM_CHANGE_STATUS() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Room status changed",
+            status_code=200,
+        )
+    
