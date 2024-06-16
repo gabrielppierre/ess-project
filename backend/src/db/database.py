@@ -199,7 +199,7 @@ class Database():
         }
     
     # TODO: implement update_item method
-    # def update_item(self, collection_name: str, item_id: str, item: dict) -> dict:
+    def update_item(self, collection_name: str, item_id: str, item: dict) -> dict:
         """
         Update an item in a collection
 
@@ -216,6 +216,15 @@ class Database():
             The updated item
 
         """
+        collection: Collection = self.db[collection_name]
+        
+        result = collection.update_one(
+            {"id": item_id},
+            {"$set": item}
+        )
+        
+        update_item = collection.find_one({"id": item_id}, {"_id": 0})
+        return update_item
 
     # TODO: implement delete_item method
     # def delete_item(self, collection_name: str, item_id: str) -> list:
