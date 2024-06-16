@@ -28,3 +28,17 @@ class ReservationService(ReservationServiceMeta):
             message=HTTPResponses.RESERVATION_CREATED().message,
             status_code=HTTPResponses.RESERVATION_CREATED().status_code,
     )
+  
+  @staticmethod
+  def remove_reservation(reservation_id: str)->HttpResponseModel:
+      """Remove reservation method implementation"""
+      remove = db.delete_item('reservations', reservation_id)
+      if remove.deleted_count == 0:
+          return HttpResponseModel(
+              message=HTTPResponses.RESERVATION_NOT_FOUND().message,
+              status_code=HTTPResponses.RESERVATION_NOT_FOUND().status_code,
+          )
+      return HttpResponseModel(
+          message=HTTPResponses.RESERVATION_REMOVED().message,
+          status_code=HTTPResponses.RESERVATION_REMOVED().status_code,
+      )
