@@ -54,3 +54,58 @@ def create_reservation(reservation: dict) -> HttpResponseModel:
     """
     reservation_create_response = ReservationService.create_reservation(reservation)
     return reservation_create_response
+
+
+@router.post(
+    "/",
+    response_model=HttpResponseModel,
+    status_code=status.HTTP_200_OK,
+    description="Approve a reservation",
+    tags=["reservations"],
+    responses={
+        status.HTTP_200_OK: {
+            "model": HttpResponseModel,
+            "description": "Reservation approved",
+        }
+    }
+)
+def approve_reservation(reservation_id: str) -> HttpResponseModel:
+    """
+    Approve a reservation.
+
+    Args:
+        reservation_id (str): The reservation id that needs to be approved
+
+    Returns:
+        HttpResponseModel: The approved reservation
+    """
+    
+    reservation_approve_response = ReservationService.approve_reservation(reservation_id)
+    return reservation_approve_response
+
+@router.post(
+    "/",
+    response_model=HttpResponseModel,
+    status_code=status.HTTP_200_OK,
+    description="Deny a reservation",
+    tags=["reservations"],
+    responses={
+        status.HTTP_200_OK: {
+            "model": HttpResponseModel,
+            "description": "Reservation denied",
+        }
+    }
+)
+def deny_reservation(reservation_id: str) -> HttpResponseModel:
+    """
+    Approve a reservation.
+
+    Args:
+        reservation_id (str): The reservation id that needs to be approved
+
+    Returns:
+        HttpResponseModel: The approved reservation
+    """
+    
+    reservation_deny_response = ReservationService.deny_reservation(reservation_id)
+    return reservation_deny_response
