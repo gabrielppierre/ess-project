@@ -121,3 +121,31 @@ def update_room_status(id: str, status: bool) -> HttpResponseModel:
       """
       room_update_response = RoomService.update_room_status(id, status)
       return room_update_response
+
+@router.delete(
+      "/{id}",
+      response_model=HttpResponseModel,
+      status_code=status.HTTP_200_OK,
+      description="Delete a room",
+      tags=["rooms"],
+      responses= {
+            status.HTTP_200_OK: {
+                  "model": HttpResponseModel,
+                  "description": "Successfully deleted room",
+                  }
+            },
+)
+
+def delete_room(id: str) -> HttpResponseModel:
+      """
+            Delete a room
+
+            Parameters: 
+            - id: room id
+
+            Returns:
+            - the deletion status
+
+      """
+      room_delete_response = RoomService.delete_room(id)
+      return room_delete_response

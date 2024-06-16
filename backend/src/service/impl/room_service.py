@@ -58,3 +58,18 @@ class RoomService(RoomServiceMeta):
                   status_code=HTTPResponses.ROOM_CHANGE_STATUS().status_code,
                   data=rooms,
                   )
+      
+      @staticmethod
+      def delete_room(id: str) -> HttpResponseModel:
+            rooms = db.get_items_by_field('rooms', 'id', id)
+            if not rooms:
+                  return HttpResponseModel(
+                        message=HTTPResponses.ROOM_NOT_FOUND().message,
+                        status_code=HTTPResponses.ROOM_NOT_FOUND().status_code,
+                  )
+            db.delete_item('rooms', id)
+            return HttpResponseModel(
+                  message=HTTPResponses.ROOM_DELETED().message,
+                  status_code=HTTPResponses.ROOM_DELETED().status_code,
+                  data=rooms,
+            )

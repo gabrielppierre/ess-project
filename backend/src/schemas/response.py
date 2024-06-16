@@ -131,3 +131,10 @@ class HTTPResponses:
             status_code=200,
         )
     
+    @staticmethod
+    def ROOM_DELETED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Room deleted",
+            status_code=200,
+        )
+    
