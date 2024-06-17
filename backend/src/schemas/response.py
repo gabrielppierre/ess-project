@@ -102,3 +102,47 @@ class HTTPResponses:
             message="Reservation created",
             status_code=201,
         )
+      
+    @staticmethod
+    def RESERVATION_UPDATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Reservation updated",
+            status_code=200,
+        )
+    
+    @staticmethod
+    def USER_CREATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="user created",
+            status_code=201,
+        )
+    
+
+    @staticmethod
+    def USER_NOT_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="User not found",
+            status_code=404,
+        )
+
+    @staticmethod
+    def USER_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="User found",
+            status_code=200,
+        )
+    
+    @staticmethod
+    def USER_UPDATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="User updated",
+            status_code=200,
+        )
+    
+
+    @staticmethod
+    def USER_DELETED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="User deleted",
+            status_code=200,
+        )
