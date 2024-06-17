@@ -28,13 +28,13 @@ class ReservationService(ReservationServiceMeta):
         return HttpResponseModel(
             message=HTTPResponses.RESERVATION_CREATED().message,
             status_code=HTTPResponses.RESERVATION_CREATED().status_code,
-            data=reservations,
+            data=reservations[-1],
     )
   
   @staticmethod
   def update_reservation(reservation_id: str, reservation: dict) -> HttpResponseModel:
         """Update item method implementation"""
-        item = db.get_item('reservations', reservation_id)
+        item = db.get_item_by_id('reservations', reservation_id)
 
         if not item:
             return HttpResponseModel(
