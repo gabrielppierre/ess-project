@@ -9,8 +9,7 @@ def reservation_entity(reservation) -> dict:
         "status": reservation["status"],
         "start_date": reservation["start_date"],
         "end_date": reservation["end_date"],
-        "room_name": reservation["room_name"],
-        "activity": reservation["activity"],
+        "activity": reservation["activiy"],
         "teacher": reservation["teacher"],
         "created_at": reservation.get("created_at")
     }
@@ -26,7 +25,6 @@ def reservation_response_entity(reservation) -> dict:
         "status": reservation["status"],
         "start_date": reservation["start_date"],
         "end_date": reservation["end_date"],
-        "room_name": reservation["room_name"],
         "activity": reservation["activiy"],
         "teacher": reservation["teacher"],
         "created_at": reservation.get("created_at")

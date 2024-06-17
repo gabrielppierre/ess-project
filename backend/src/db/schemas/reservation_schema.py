@@ -4,7 +4,7 @@ from src.db.schemas.model_schema import ModelSchema
 
 class ReservationSchema(ModelSchema):
   bson_type: str = "object"
-  required: list = ["id", "room_id", "user_id", "status", "start_date", "end_date", "room_name", "activity", "teacher"]
+  required: list = ["id", "room_id", "user_id", "status", "start_date", "end_date", "activity", "teacher"]
   properties: dict = {
     "id": {
       "bson_type": "string",
@@ -30,10 +30,6 @@ class ReservationSchema(ModelSchema):
       "bson_type": "string",
       "description": "The reservation's end date"
     },
-    "room_name": {
-            "bson_type": "string",
-            "description": "Room's name"
-        },
     "activity": {
         "bson_type": "string",
         "description": "Activity that will be done"
@@ -47,10 +43,9 @@ class ReservationSchema(ModelSchema):
       "description": "The reservation's creation time"
     }
   }
-
   def get(self) -> dict:
-        return {
-            "bson_type": self.bson_type,
-            "required": self.required,
-            "properties": self.properties
-        }
+    return {
+        "bson_type": self.bson_type,
+        "required": self.required,
+        "properties": self.properties
+    }

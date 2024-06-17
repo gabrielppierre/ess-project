@@ -7,16 +7,13 @@ class ReservationCreate(BaseModel):
     user_id: str
     status: str
     start_time: datetime
-    end_time: datetime
-    room_name: str
+    end_time: datetime 
     activity: str
     teacher: str
 
 class ReservationUpdate(BaseModel):
-    status: Optional[str]
-    start_time: Optional[str]
-    end_time: Optional[datetime]
-    room_name: Optional[str]
+    start_time: Optional[datetime]
+    end_time: Optional[datetime] 
     activity: Optional[str]
     teacher: Optional[str]
 
@@ -27,33 +24,9 @@ class ReservationGet(BaseModel):
     status: str
     start_time: datetime
     end_time: datetime
-    room_name: str
     activity: str
     teacher: str
     created_at: Optional[datetime]
 
 class ReservationList(BaseModel):
     reservations: list[ReservationGet]
-
-
-
-
-
-
-
-# class ReservationModel(BaseModel):
-#     room_id: str
-#     user_id: str
-#     start_time: datetime
-#     end_time: datetime
-
-# class ReservationGet(BaseModel):
-#     id: str
-#     room_id: str
-#     user_id: str
-#     start_time: datetime
-#     end_time: datetime
-#     created_at: Optional[datetime]
-
-# class ReservationList(BaseModel):
-#     reservations: list[ReservationGet]
