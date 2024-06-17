@@ -197,7 +197,7 @@ class Database():
             "id": str(item_id),
             **item
         }
-    
+
     def update_item(self, collection_name: str, item_id: str, item: dict) -> dict:
         """
         Update an item in a collection
@@ -220,11 +220,12 @@ class Database():
         result = collection.update_one({"id": item_id}, {"$set": item})
 
         if result.matched_count == 0:
-            return None
+            raise ValueError(f"Item with id {item_id} not found in collection {collection_name}")
 
-        return self.get_item_by_id(collection_name, item_id)
+        updated_item = collection.find_one({"id": item_id})
+        return updated_item
 
-    def delete_item(self, collection_name: str, item_id: str) -> bool:
+    def delete_item(self, collection_name: str, item_id: str) -> list:
         """
         Delete an item from a collection
 
@@ -243,4 +244,8 @@ class Database():
 
         result = collection.delete_one({"id": item_id})
 
-        return result.deleted_count > 0
+        if result.deleted_count == 0:
+            raise ValueError(f"Item with id {item_id} not found in collection {collection_name}")
+
+        remaining_items = list(collection.find())
+        return remaining_items
