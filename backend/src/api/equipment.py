@@ -11,27 +11,20 @@ def create_equipment(equipment_data: EquipmentModel):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="ID is required")
     return EquipmentService.create_equipment(equipment_data)
 
-@router.get("/{item_id}", response_model=EquipmentGet)
-def get_equipment(item_id: str):
-    response = EquipmentService.get_equipment(item_id)
-    if response.status_code == 404:
-        raise HTTPException(status_code=response.status_code, detail=response.message)
-    return response
-
 @router.get("/", response_model=list[EquipmentGet])
 def list_equipments():
     return EquipmentService.list_equipments()
 
-@router.put("/{item_id}", response_model=EquipmentGet)
-def update_equipment(item_id: str, equipment_data: EquipmentModel):
-    response = EquipmentService.update_equipment(item_id, equipment_data)
-    if response.status_code == 404:
-        raise HTTPException(status_code=response.status_code, detail=response.message)
-    return response
-
-@router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_equipment(item_id: str):
-    response = EquipmentService.delete_equipment(item_id)
-    if response.status_code == 404:
-        raise HTTPException(status_code=response.status_code, detail=response.message)
-    return response
+@router.delete("/{equipment_id}", response_model=HttpResponseModel, status_code=status.HTTP_200_OK)
+def delete_equipment(equipment_id: str) -> HttpResponseModel:
+    try:
+        EquipmentService.delete_equipment(equipment_id)
+        return HttpResponseModel(
+            message=f"Equipamento com ID {equipment_id} deletado com sucesso.",
+            status_code=status.HTTP_200_OK,
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Erro ao deletar equipamento: {str(e)}",
+        )

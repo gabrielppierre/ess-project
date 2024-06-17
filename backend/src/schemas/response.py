@@ -183,8 +183,15 @@ class HTTPResponses:
         )
 
     @staticmethod
-    def EQUIPMENT_NOT_FOUND():
+    def EQUIPMENT_NOT_FOUND() -> HttpResponseModel:
         return HttpResponseModel(
             message="Equipamento não encontrado",
             status_code=404
+        )
+    
+    @staticmethod
+    def EQUIPMENT_DELETED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Equipamento excluído",
+            status_code=200,
         )
