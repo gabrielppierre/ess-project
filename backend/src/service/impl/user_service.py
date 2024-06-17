@@ -5,12 +5,12 @@ from src.db.__init__ import database as db
 from typing import Dict
 from datetime import datetime
 
-class ItemService(UserServiceMeta):
+class UserService(UserServiceMeta):
 
     @staticmethod
     def get_user(user_id: str) -> HttpResponseModel:
         """Get item by id method implementation"""
-        user = db.get_item_by_id('user', user_id)
+        user = db.get_item_by_id('users', user_id)
         if not user:
             return HttpResponseModel(
                 message=HTTPResponses.ITEM_NOT_FOUND().message,
@@ -23,19 +23,57 @@ class ItemService(UserServiceMeta):
             )
     
     @staticmethod
-    def create_user(user_data: Dict) -> HttpResponseModel:
-        user = UserSchema(**user_data, created_at=str(datetime.now()), deleted=False)
-        result = db.insert_item(user.dict())
-        if result.inserted_id:
+    def create_user(user: dict) -> HttpResponseModel:
+        """Create user method implementation"""
+        db.insert_item('users', user)
+        return HttpResponseModel(
+            message=HTTPResponses.USER_CREATED().message,
+            status_code=HTTPResponses.USER_CREATED().status_code,
+    )
+        
+     
+    @staticmethod
+    def update_user(user_id: str, user_data: Dict) -> HttpResponseModel:
+        """Update user by id method implementation"""
+        existing_user = db.get_item_by_id('users', user_id)
+        if not existing_user:
             return HttpResponseModel(
-                message=HTTPResponses.ITEM_CREATED().message,
-                status_code=HTTPResponses.ITEM_CREATED().status_code,
-                data={"_id": str(result.inserted_id)}
+                message=HTTPResponses.USER_NOT_FOUND().message,
+                status_code=HTTPResponses.USER_NOT_FOUND().status_code,
+            )
+        user_data["updated_at"] = str(datetime.now())
+        updated_user = db.update_item('users', user_id, user_data)
+        if updated_user:
+            return HttpResponseModel(
+                message=HTTPResponses.USER_UPDATED().message,
+                status_code=HTTPResponses.USER_UPDATED().status_code,
+                data=updated_user,
             )
         else:
             return HttpResponseModel(
-                message=HTTPResponses.INTERNAL_SERVER_ERROR().message,
-                status_code=HTTPResponses.INTERNAL_SERVER_ERROR().status_code
+                message=HTTPResponses.USER_NOT_FOUND().message,
+                status_code=HTTPResponses.USER_NOT_FOUND().status_code
+            )
+
+    @staticmethod
+    def delete_user(user_id: str) -> HttpResponseModel:
+        """Delete user by id method implementation"""
+        existing_user = db.get_item_by_id('user', user_id)
+        if not existing_user:
+            return HttpResponseModel(
+                message=HTTPResponses.USER_NOT_FOUND().message,
+                status_code=HTTPResponses.USER_NOT_FOUND().status_code,
+            )
+        success = db.delete_item('users', user_id)
+        if success:
+            return HttpResponseModel(
+                message=HTTPResponses.USER_DELETED().message,
+                status_code=HTTPResponses.USER_DELETED().status_code,
+            )
+        else:
+            return HttpResponseModel(
+                message=HTTPResponses.USER_NOT_FOUND().message,
+                status_code=HTTPResponses.USER_NOT_FOUND().status_code
             )
 
     
