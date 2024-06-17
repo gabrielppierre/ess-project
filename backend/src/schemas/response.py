@@ -1,3 +1,4 @@
+from fastapi import HTTPException  # Adicione esta importação
 from typing import Optional
 from pydantic import BaseModel
 
@@ -167,16 +168,23 @@ class HTTPResponses:
             status_code=200,
         )
     
+    @staticmethod
     def USER_UPDATED() -> HttpResponseModel:
         return HttpResponseModel(
             message="User updated",
             status_code=200,
         )
     
-
     @staticmethod
     def USER_DELETED() -> HttpResponseModel:
         return HttpResponseModel(
             message="User deleted",
             status_code=200,
+        )
+
+    @staticmethod
+    def EQUIPMENT_NOT_FOUND():
+        return HttpResponseModel(
+            message="Equipamento não encontrado",
+            status_code=404
         )
