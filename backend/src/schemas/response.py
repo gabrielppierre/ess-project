@@ -121,21 +121,21 @@ class HTTPResponses:
     @staticmethod
     def USER_NOT_FOUND() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Item not found",
+            message="User not found",
             status_code=404,
         )
 
     @staticmethod
     def USER_FOUND() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Item found",
+            message="User found",
             status_code=200,
         )
     
     @staticmethod
     def USER_UPDATED() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Item updated",
+            message="User updated",
             status_code=200,
         )
     
@@ -143,6 +143,6 @@ class HTTPResponses:
     @staticmethod
     def USER_DELETED() -> HttpResponseModel:
         return HttpResponseModel(
-            message="user deleted",
+            message="User deleted",
             status_code=200,
         )
