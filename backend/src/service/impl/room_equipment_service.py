@@ -102,5 +102,5 @@ class RoomEquipmentService(RoomEquipmentServiceMeta):
         return HttpResponseModel(
             message="Equipamentos encontrados para esta sala",
             status_code=200,
-            data={"room_equipments": room_equipments},
+            data={"room_equipments": equipment_list},
         )
