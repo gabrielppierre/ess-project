@@ -126,8 +126,11 @@ def mock_reservation_exists(context, reservation_id: str):
     Mock the database to return a reservation with the given ID
     """
 
-    reservation = ReservationService.create_reservation({"room_id": "room1", "user_id": "user1", "start_date": "2022-01-01 10:00:00", "end_date": "2022-01-01 12:00:00"})
-    context['reservation_id'] = reservation.data[0]['id']
+    ReservationService.update_reservation = lambda reservation_id, reservation : HttpResponseModel(
+        message=HTTPResponses.RESERVATION_UPDATED().message,
+        status_code=HTTPResponses.RESERVATION_UPDATED().status_code,
+        data=[{"id": reservation_id, "room_id": "room1", "user_id": "user1", "start_date": "2022-01-02 10:00:00", "end_date": "2022-01-02 12:00:00"}, {"id": "336ff1c0", "room_id": "room2", "user_id": "user2", "start_date": "2022-01-01 10:00:00", "end_date": "2022-01-02 10:00:00"}]
+    )
 
 @when(parsers.cfparse('uma requisição PUT for enviada para "{req_url}" com os dados da reserva: user_id "{user_id}", room_id "{room_id}", start_date "{start_date}" e end_date "{end_date}"'), target_fixture='context')
 def send_update_reservation_request(client, context, req_url: str, user_id: str, room_id: str, start_date: str, end_date: str):
@@ -135,7 +138,7 @@ def send_update_reservation_request(client, context, req_url: str, user_id: str,
     Send a PUT request to the given URL with the reservation data
     """
 
-    response = client.put(f"/reservations/{context['reservation_id']}", json={"user_id": user_id, "room_id": room_id, "start_date": start_date, "end_date": end_date})
+    response = client.put(req_url, json={"user_id": user_id, "room_id": room_id, "start_date": start_date, "end_date": end_date})
     context['response'] = response
     return context
 
@@ -148,16 +151,12 @@ def check_response_status_code(context, status_code: str):
     assert context['response'].status_code == int(status_code)
     return context
 
-@then(parsers.cfparse('o JSON da resposta deve conter a reserva com user_id "{user_id}", room_id "{room_id}", start_date "{start_date}" e end_date "{end_date}"'), target_fixture='context')
-def check_response_json_contains_reservation_data(context, user_id: str, room_id: str, start_date: str, end_date: str):
+@then(parsers.cfparse('o JSON da resposta deve conter a reserva atualizada com id "{id}", user_id "{user_id}", room_id "{room_id}", start_date "{start_date}" e end_date "{end_date}"'))
+def check_response_json_contains_reservation_data(context, id: str ,user_id: str, room_id: str, start_date: str, end_date: str):
     """
     Check if the response JSON contains the reservation data
     """
 
-    expected_data = {"room_id": room_id, "user_id": user_id, "start_date": start_date, "end_date": end_date}
-    response_data = context['response'].json()['data']
-
-    sanitized_response_data = [{k: v for k, v in reservation.items() if k != 'id'} for reservation in response_data]
-
-    assert expected_data in sanitized_response_data
+    expected_data = {"id": id, "room_id": room_id, "user_id": user_id, "start_date": start_date, "end_date": end_date}
+    assert expected_data in context['response'].json()['data']
     return context
