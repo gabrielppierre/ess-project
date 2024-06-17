@@ -28,3 +28,12 @@ class ReservationService(ReservationServiceMeta):
             message=HTTPResponses.RESERVATION_CREATED().message,
             status_code=HTTPResponses.RESERVATION_CREATED().status_code,
     )
+  
+  @staticmethod
+  def update_reservation(reservation_id: str, reservation: dict) -> HttpResponseModel:
+        """Update item method implementation"""
+        db.update_item('reservations', reservation_id, reservation)
+        return HttpResponseModel(
+            message=HTTPResponses.RESERVATION_UPDATED().message,
+            status_code=HTTPResponses.RESERVATION_UPDATED().status_code,
+    )
