@@ -28,8 +28,23 @@ class ReservationService(ReservationServiceMeta):
         return HttpResponseModel(
             message=HTTPResponses.RESERVATION_CREATED().message,
             status_code=HTTPResponses.RESERVATION_CREATED().status_code,
-            data=reservations[-1],
-    )
+        )
+
+  
+  @staticmethod
+  def remove_reservation(reservation_id: str)->HttpResponseModel:
+      """Remove reservation method implementation"""
+      remove = db.delete_item('reservations', reservation_id)
+      if remove.deleted_count == 0:
+          return HttpResponseModel(
+              message=HTTPResponses.RESERVATION_NOT_FOUND().message,
+              status_code=HTTPResponses.RESERVATION_NOT_FOUND().status_code,
+          )
+      return HttpResponseModel(
+          message=HTTPResponses.RESERVATION_REMOVED().message,
+          status_code=HTTPResponses.RESERVATION_REMOVED().status_code,
+      )
+
   
   @staticmethod
   def update_reservation(reservation_id: str, reservation: dict) -> HttpResponseModel:
@@ -40,6 +55,7 @@ class ReservationService(ReservationServiceMeta):
             return HttpResponseModel(
                 message=HTTPResponses.RESERVATION_NOT_FOUND().message,
                 status_code=HTTPResponses.RESERVATION_NOT_FOUND().status_code,
+                data=reservations[-1],   # essa linha estava deslocada no conflito, não tenho certeza se era para estar aqui
             )
 
         db.update_item('reservations', reservation_id, reservation)
