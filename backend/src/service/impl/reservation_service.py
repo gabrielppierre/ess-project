@@ -44,6 +44,7 @@ class ReservationService(ReservationServiceMeta):
             status_code=HTTPResponses.RESERVATION_APPROVED().status_code,
         )
     
+    @staticmethod
     def deny_reservation(reservation_id: str) -> HttpResponseModel:
         """Update status to denied method implementation"""
         update = db.update_item('reservations', reservation_id, {'status': 'denied'})

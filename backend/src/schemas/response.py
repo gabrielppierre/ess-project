@@ -107,12 +107,12 @@ class HTTPResponses:
     def RESERVATION_APPROVED() -> HttpResponseModel:
         return HttpResponseModel(
             message="Reservation approved",
-            status_code=200,
+            status_code=201,
         )
     
     @staticmethod
     def RESERVATION_DENIED() -> HttpResponseModel:
         return HttpResponseModel(
             message="Reservation denied",
-            status_code=200,
+            status_code=201,
         )
