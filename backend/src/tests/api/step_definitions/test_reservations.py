@@ -120,17 +120,26 @@ def mock_reservation_service_update_method():
         data=[{"id": "61c2822b", "room_id": "room1", "user_id": "user1", "start_date": "2022-01-01 10:00:00", "end_date": "2022-01-01 12:00:00"}, {"id": "336ff1c0", "room_id": "room2", "user_id": "user2", "start_date": "2022-01-01 10:00:00", "end_date": "2022-01-02 10:00:00"}]
     )
 
+@given(parsers.cfparse('a reserva com id "{reservation_id}" existe'), target_fixture='context')
+def mock_reservation_exists(context, reservation_id: str):
+    """
+    Mock the database to return a reservation with the given ID
+    """
+
+    reservation = ReservationService.create_reservation({"room_id": "room1", "user_id": "user1", "start_date": "2022-01-01 10:00:00", "end_date": "2022-01-01 12:00:00"})
+    context['reservation_id'] = reservation.data[0]['id']
+
 @when(parsers.cfparse('uma requisição PUT for enviada para "{req_url}" com os dados da reserva: user_id "{user_id}", room_id "{room_id}", start_date "{start_date}" e end_date "{end_date}"'), target_fixture='context')
 def send_update_reservation_request(client, context, req_url: str, user_id: str, room_id: str, start_date: str, end_date: str):
     """
     Send a PUT request to the given URL with the reservation data
     """
 
-    response = client.put(req_url, json={"user_id": user_id, "room_id": room_id, "start_date": start_date, "end_date": end_date})
+    response = client.put(f"/reservations/{context['reservation_id']}", json={"user_id": user_id, "room_id": room_id, "start_date": start_date, "end_date": end_date})
     context['response'] = response
     return context
 
-@then(parsers.cfparse('o status da resposta deve ser "{status_code}"'), target_fixture='context')
+@then(parsers.cfparse('o status da resposta será "{status_code}"'), target_fixture='context')
 def check_response_status_code(context, status_code: str):
     """
     Check if the response status code is the expected

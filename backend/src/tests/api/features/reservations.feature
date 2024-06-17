@@ -14,6 +14,7 @@ Feature: Reservations API
 
   Scenario: Atualizar uma reserva existente
     Given o ReservationService permite a atualização de uma reserva
+    And a reserva com id "61c2822b" existe
     When uma requisição PUT for enviada para "/reservations/61c2822b" com os dados da reserva: user_id "user1", room_id "room1", start_date "2022-01-02 10:00:00" e end_date "2022-01-02 12:00:00"
     Then o status da resposta deve ser "200"
-    And o JSON da resposta deve conter a reserva com user_id "user1", room_id "room1", start_date "2022-01-02 10:00:00" e end_date "2022-01-02 12:00:00"
+    And o JSON da resposta deve conter a reserva com id "61c2822b", user_id "user1", room_id "room1", start_date "2022-01-02 10:00:00" e end_date "2022-01-02 12:00:00"
