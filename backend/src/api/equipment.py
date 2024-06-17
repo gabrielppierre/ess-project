@@ -28,3 +28,19 @@ def delete_equipment(equipment_id: str) -> HttpResponseModel:
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Erro ao deletar equipamento: {str(e)}",
         )
+    
+@router.put("/{equipment_id}", response_model=EquipmentGet, status_code=status.HTTP_200_OK)
+def update_equipment(equipment_id: str, equipment_data: EquipmentModel) -> EquipmentGet:
+    try:
+        updated_equipment = EquipmentService.update_equipment(equipment_id, equipment_data)
+        return updated_equipment
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e),
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Erro ao atualizar equipamento: {str(e)}",
+        )

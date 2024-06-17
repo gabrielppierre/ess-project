@@ -28,3 +28,23 @@ class EquipmentService(EquipmentServiceMeta):
             print(f"Equipamento com ID: {equipment_id} deletado com sucesso")
         except Exception as e:
             print(f"Erro ao deletar equipamento com ID: {equipment_id}. Erro: {str(e)}")
+
+    @staticmethod
+    def update_equipment(equipment_id: str, equipment_data: EquipmentModel) -> EquipmentGet:
+        print(f"Atualizando equipamento com ID: {equipment_id}")
+        try:
+            existing_equipment = db.get_item_by_id('equipments', equipment_id)
+            if not existing_equipment:
+                raise ValueError(f"Equipamento com ID: {equipment_id} não encontrado")
+
+            db.update_item('equipments', equipment_id, equipment_data.dict())
+            updated_equipment = db.get_item_by_id('equipments', equipment_id)
+            if not updated_equipment:
+                raise ValueError(f"Equipamento com ID: {equipment_id} não encontrado após atualização")
+
+            equipment_response = equipment_response_entity(updated_equipment)
+            print(f"Equipamento com ID: {equipment_id} atualizado com sucesso")
+            return EquipmentGet(**equipment_response)
+        except Exception as e:
+            print(f"Erro ao atualizar equipamento com ID: {equipment_id}. Erro: {str(e)}")
+            raise e
