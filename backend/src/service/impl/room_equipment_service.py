@@ -10,14 +10,14 @@ class RoomEquipmentService(RoomEquipmentServiceMeta):
     @staticmethod
     def add_equipment_to_room(room_id: str, equipment_id: str, amount: int) -> HttpResponseModel:
         """Add equipment to a room method implementation"""
-        existing_room_equipment = db.get_items_by_field('room_equipment', 'room_id', room_id)
+        existing_room_equipment = db.get_items_by_field('room_equipments', 'room_id', room_id)
         existing_room_equipment = [item for item in existing_room_equipment if item['equipment_id'] == equipment_id]
 
         if existing_room_equipment:
             # Atualiza a quantidade se já existir
             existing_amount = existing_room_equipment[0]['amount']
             new_amount = existing_amount + amount
-            db.update_item('room_equipment', existing_room_equipment[0]['id'], {'amount': new_amount})
+            db.update_item('room_equipments', existing_room_equipment[0]['id'], {'amount': new_amount})
         else:
             # Se não, cria uma associação nova
             room_equipment_data = RoomEquipmentModel(
@@ -26,7 +26,7 @@ class RoomEquipmentService(RoomEquipmentServiceMeta):
                 amount=amount,
                 created_at=datetime.now().isoformat()
             )
-            db.insert_item('room_equipment', room_equipment_data.dict())
+            db.insert_item('room_equipments', room_equipment_data.dict())
 
         return HttpResponseModel(
             message="Equipamento adicionado à sala com sucesso",
@@ -36,7 +36,7 @@ class RoomEquipmentService(RoomEquipmentServiceMeta):
     @staticmethod
     def update_room_equipment(room_id: str, equipment_id: str, amount: int) -> HttpResponseModel:
         """Update room equipment method implementation"""
-        existing_room_equipment = db.get_items_by_field('room_equipment', 'room_id', room_id)
+        existing_room_equipment = db.get_items_by_field('room_equipments', 'room_id', room_id)
         existing_room_equipment = [item for item in existing_room_equipment if item['equipment_id'] == equipment_id]
 
         if not existing_room_equipment:
@@ -45,7 +45,7 @@ class RoomEquipmentService(RoomEquipmentServiceMeta):
                 status_code=404,
             )
 
-        db.update_item('room_equipment', existing_room_equipment[0]['id'], {'amount': amount})
+        db.update_item('room_equipments', existing_room_equipment[0]['id'], {'amount': amount})
 
         return HttpResponseModel(
             message="Quantidade de equipamento na sala atualizada com sucesso",
@@ -55,7 +55,7 @@ class RoomEquipmentService(RoomEquipmentServiceMeta):
     @staticmethod
     def remove_equipment_from_room(room_id: str, equipment_id: str) -> HttpResponseModel:
         """Remove equipment from a room method implementation"""
-        existing_room_equipment = db.get_items_by_field('room_equipment', 'room_id', room_id)
+        existing_room_equipment = db.get_items_by_field('room_equipments', 'room_id', room_id)
         existing_room_equipment = [item for item in existing_room_equipment if item['equipment_id'] == equipment_id]
 
         if not existing_room_equipment:
@@ -64,7 +64,7 @@ class RoomEquipmentService(RoomEquipmentServiceMeta):
                 status_code=404,
             )
 
-        db.delete_item('room_equipment', existing_room_equipment[0]['id'])
+        db.delete_item('room_equipments', existing_room_equipment[0]['id'])
 
         return HttpResponseModel(
             message="Equipamento removido da sala com sucesso",
@@ -74,7 +74,7 @@ class RoomEquipmentService(RoomEquipmentServiceMeta):
     @staticmethod
     def get_room_equipment(room_id: str) -> HttpResponseModel:
         """Get room equipment by room_id method implementation"""
-        room_equipments = db.get_items_by_field('room_equipment', 'room_id', room_id)
+        room_equipments = db.get_items_by_field('room_equipments', 'room_id', room_id)
 
         if not room_equipments:
             return HttpResponseModel(
@@ -102,5 +102,5 @@ class RoomEquipmentService(RoomEquipmentServiceMeta):
         return HttpResponseModel(
             message="Equipamentos encontrados para esta sala",
             status_code=200,
-            data={"room_equipments": equipment_list},
+            data={"room_equipments": room_equipments},
         )
