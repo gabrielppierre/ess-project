@@ -7,14 +7,12 @@ class ReservationCreate(BaseModel):
     user_id: str
     start_time: datetime
     end_time: datetime 
-    room_name: str
     activity: str
     teacher: str
 
 class ReservationUpdate(BaseModel):
     start_time: Optional[datetime]
     end_time: Optional[datetime] 
-    room_name: Optional[str]
     activity: Optional[str]
     teacher: Optional[str]
 
@@ -24,7 +22,6 @@ class ReservationGet(BaseModel):
     user_id: str
     start_time: datetime
     end_time: datetime
-    room_name: str
     activity: str
     teacher: str
     created_at: Optional[datetime]
