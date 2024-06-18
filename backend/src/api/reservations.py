@@ -125,6 +125,7 @@ def update_reservation(reservation_id: str, reservation: dict) -> HttpResponseMo
         }
     }
 )
+
 def approve_reservation(reservation_id: str) -> HttpResponseModel:
     """
     Approve a reservation.

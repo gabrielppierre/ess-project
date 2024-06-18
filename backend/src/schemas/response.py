@@ -1,3 +1,4 @@
+from fastapi import HTTPException  # Adicione esta importação
 from typing import Optional
 from pydantic import BaseModel
 
@@ -109,34 +110,34 @@ class HTTPResponses:
             message="Reservation removed",
             status_code=200
         )
-    
+
     @staticmethod
     def ROOM_FOUND() -> HttpResponseModel:
         return HttpResponseModel(
             message="Room found",
             status_code=200,
         )
-      
+
     def RESERVATION_UPDATED() -> HttpResponseModel:
         return HttpResponseModel(
             message="Reservation updated",
             status_code=200,
         )
-    
+
     @staticmethod
     def ROOM_NOT_FOUND() -> HttpResponseModel:
         return HttpResponseModel(
             message="Room not found",
             status_code=404,
         )
-    
+
     @staticmethod
     def ROOM_CREATED() -> HttpResponseModel:
         return HttpResponseModel(
             message="Room created",
             status_code=201,
         )
-    
+
     @staticmethod
     def ROOM_CHANGE_STATUS() -> HttpResponseModel:
         return HttpResponseModel(
@@ -150,7 +151,7 @@ class HTTPResponses:
             message="user created",
             status_code=201,
         )
-    
+
 
     @staticmethod
     def USER_NOT_FOUND() -> HttpResponseModel:
@@ -165,21 +166,20 @@ class HTTPResponses:
             message="User found",
             status_code=200,
         )
-    
+
     @staticmethod
     def ROOM_DELETED() -> HttpResponseModel:
         return HttpResponseModel(
             message="Room deleted",
             status_code=200,
         )
-    
+
     @staticmethod
     def USER_UPDATED() -> HttpResponseModel:
         return HttpResponseModel(
             message="User updated",
             status_code=200,
         )
-    
 
     @staticmethod
     def USER_DELETED() -> HttpResponseModel:
@@ -187,14 +187,35 @@ class HTTPResponses:
             message="User deleted",
             status_code=200,
         )
-    
+
+    @staticmethod
+    def EQUIPMENT_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Equipment Found",
+            status_code=404
+        )
+
+    @staticmethod
+    def EQUIPMENT_NOT_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Equipment not Found",
+            status_code=404
+        )
+
+    @staticmethod
+    def EQUIPMENT_DELETED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Equipamento excluído",
+            status_code=200,
+        )
+
     @staticmethod
     def RESERVATION_APPROVED() -> HttpResponseModel:
         return HttpResponseModel(
             message="Reservation approved",
             status_code=201,
         )
-    
+
     @staticmethod
     def RESERVATION_DENIED() -> HttpResponseModel:
         return HttpResponseModel(
