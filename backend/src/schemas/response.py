@@ -181,11 +181,18 @@ class HTTPResponses:
             message="User deleted",
             status_code=200,
         )
+    
+    @staticmethod
+    def EQUIPMENT_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Equipment Found",
+            status_code=404
+        )
 
     @staticmethod
     def EQUIPMENT_NOT_FOUND() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Equipamento não encontrado",
+            message="Equipment not Found",
             status_code=404
         )
     
