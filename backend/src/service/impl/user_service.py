@@ -9,7 +9,7 @@ class UserService(UserServiceMeta):
 
     @staticmethod
     def get_user(user_id: str) -> HttpResponseModel:
-        """Get item by id method implementation"""
+        """Get user by id method implementation"""
         user = db.get_item_by_id('users', user_id)
         if not user:
             return HttpResponseModel(

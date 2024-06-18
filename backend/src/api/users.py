@@ -29,7 +29,7 @@ def create_user(user: dict) -> HttpResponseModel:
     return user_create_response
 
 @router.put(
-    "/{id_user}",
+    "/{user_id}",
     response_model=HttpResponseModel,
     status_code=status.HTTP_200_OK,
     description="Create a new user",
@@ -44,7 +44,7 @@ def create_user(user: dict) -> HttpResponseModel:
         }
     },
 )
-def update_user(user: dict) -> HttpResponseModel:
+def update_user(user_id: str, user: dict) -> HttpResponseModel:
     """
     Create a user.
 
@@ -52,7 +52,8 @@ def update_user(user: dict) -> HttpResponseModel:
     - The created user.
 
     """
-    user_updated_response = UserService.update_user(user)
+
+    user_updated_response = UserService.update_user(user_id, user)
     return user_updated_response
 
 
@@ -90,4 +91,3 @@ def delete_user(user_id: str) -> HttpResponseModel:
     if not user_delete_response:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     return user_delete_response
-
