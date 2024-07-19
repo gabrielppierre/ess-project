@@ -32,7 +32,7 @@ def create_user(user: dict) -> HttpResponseModel:
     "/{user_id}",
     response_model=HttpResponseModel,
     status_code=status.HTTP_200_OK,
-    description="Create a new user",
+    description="Update user",
     tags=["users"],
     responses={
         status.HTTP_200_OK: {

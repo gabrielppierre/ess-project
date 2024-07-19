@@ -1,3 +1,4 @@
+from fastapi import HTTPException  # Adicione esta importação
 from typing import Optional
 from pydantic import BaseModel
 
@@ -104,6 +105,47 @@ class HTTPResponses:
         )
     
     @staticmethod
+    def RESERVATION_REMOVED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Reservation removed",
+            status_code=200
+        )
+    
+    @staticmethod
+    def ROOM_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Room found",
+            status_code=200,
+        )
+      
+    def RESERVATION_UPDATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Reservation updated",
+            status_code=200,
+        )
+    
+    @staticmethod
+    def ROOM_NOT_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Room not found",
+            status_code=404,
+        )
+    
+    @staticmethod
+    def ROOM_CREATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Room created",
+            status_code=201,
+        )
+    
+    @staticmethod
+    def ROOM_CHANGE_STATUS() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Room status changed",
+            status_code=200,
+        )
+
+    @staticmethod
     def USER_CREATED() -> HttpResponseModel:
         return HttpResponseModel(
             message="user created",
@@ -114,28 +156,55 @@ class HTTPResponses:
     @staticmethod
     def USER_NOT_FOUND() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Item not found",
+            message="User not found",
             status_code=404,
         )
 
     @staticmethod
     def USER_FOUND() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Item found",
+            message="User found",
+            status_code=200,
+        )
+    
+    @staticmethod
+    def ROOM_DELETED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Room deleted",
             status_code=200,
         )
     
     @staticmethod
     def USER_UPDATED() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Item updated",
+            message="User updated",
             status_code=200,
         )
     
-
     @staticmethod
     def USER_DELETED() -> HttpResponseModel:
         return HttpResponseModel(
-            message="user deleted",
+            message="User deleted",
+            status_code=200,
+        )
+    
+    @staticmethod
+    def EQUIPMENT_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Equipment Found",
+            status_code=404
+        )
+
+    @staticmethod
+    def EQUIPMENT_NOT_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Equipment not Found",
+            status_code=404
+        )
+    
+    @staticmethod
+    def EQUIPMENT_DELETED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Equipamento excluído",
             status_code=200,
         )

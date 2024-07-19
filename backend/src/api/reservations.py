@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, HTTPException
 from src.schemas.response import HttpResponseModel
 from src.service.impl.reservation_service import ReservationService
 
@@ -54,3 +54,60 @@ def create_reservation(reservation: dict) -> HttpResponseModel:
     """
     reservation_create_response = ReservationService.create_reservation(reservation)
     return reservation_create_response
+
+@router.delete(
+    "/{reservation_id}",
+    response_model=HttpResponseModel,
+    status_code=status.HTTP_200_OK,
+    description="Remove a reservation",
+    tags=["reservations"],
+    responses={
+        status.HTTP_200_OK: {
+            "model": HttpResponseModel,
+            "description": "Reservation removed",
+        }
+    }
+)
+def remove_reservation(reservation_id: str) -> HttpResponseModel:
+    """
+    Remove a reservation.
+
+    Parameters:
+    - reservation_id: The id of the reservation to be removed.
+
+    Returns:
+    - A confirmation of the remotion.
+    
+    """
+    reservation_delete_response = ReservationService.remove_reservation(reservation_id)
+    if reservation_delete_response.status_code == 404:
+        raise HTTPException(status_code=404, detail=reservation_delete_response.message)
+    return reservation_delete_response
+          
+@router.put(
+    "/{reservation_id}",
+    response_model=HttpResponseModel,
+    status_code=status.HTTP_200_OK,
+    description="Update a reservation",
+    tags=["reservations"],
+    responses={
+        status.HTTP_200_OK: {
+            "model": HttpResponseModel,
+            "description": "Successfully updated a reservation",
+        }
+    },
+)
+def update_reservation(reservation_id: str, reservation: dict) -> HttpResponseModel:
+    """
+    Update a reservation.
+
+    Parameters:
+    - reservation_id: The ID of the reservation to update.
+    - reservation: The updated reservation.
+
+    Returns:
+    - The updated reservation.
+
+    """
+    reservation_update_response = ReservationService.update_reservation(reservation_id, reservation)
+    return reservation_update_response
