@@ -103,6 +103,13 @@ class HTTPResponses:
             message="Reservation created",
             status_code=201,
         )
+      
+    @staticmethod
+    def RESERVATION_UPDATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Reservation updated",
+            status_code=200,
+        )
     
     @staticmethod
     def RESERVATION_REMOVED() -> HttpResponseModel:

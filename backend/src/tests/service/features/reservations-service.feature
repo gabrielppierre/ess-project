@@ -1,17 +1,34 @@
-Feature: Reservations Service
+Feature: Reservations API
 
-# Service
-Scenario: Buscar todas as reservas
-    Given o método getAllReservations do ReservationService retorna um array com a reserva de id "61c2822b"
-    When o método getAllReservations do ReservationService for chamado
-    Then o array retornado deve conter a reserva de id "61c2822b"
+  Scenario: Obter todas as reservas
+    Given o ReservationService retorna uma lista de reservas
+    When uma requisição GET for enviada para "/reservations"
+    Then o status da resposta deve ser "200"
+    And o JSON da resposta deve conter a reserva com id "61c2822b", user_id "user1", room_id "room1", start_date "2022-01-01 10:00:00" e end_date "2022-01-01 12:00:00"
 
-Scenario: Adicionar uma reserva
-    Given o método createReservation do ReservationService adiciona uma reserva com id "61c2822b" e a retorna num array
-    When o método createReservation do ReservationService for chamado com os parâmetros start_date "2022-01-01 10:00:00", end_date "2022-01-01 12:00:00", room_id "room1" e user_id "user1"
-    Then o array retornado deve conter a reserva de id "61c2822b", start_date "2022-01-01 10:00:00", end_date "2022-01-01 12:00:00", room_id "room1" e user_id "user1"
+  Scenario: Adicionar uma nova reserva
+    Given o ReservationService permite a criação de uma reserva
+    When uma requisição POST for enviada para "/reservations" com os dados da reserva: user_id "user1", room_id "room1", start_date "2022-01-01 10:00:00" e end_date "2022-01-01 12:00:00"
+    Then o status da resposta deve ser "201"
+    And o JSON da resposta deve conter a reserva com user_id "user1", room_id "room1", start_date "2022-01-01 10:00:00" e end_date "2022-01-01 12:00:00"
 
-Scenario: Atualizar uma reserva
-    Given o método updateReservation do ReservationService atualiza a reserva de id "61c2822b" e a retorna num array
-    When o método updateReservation do ReservationService for chamado com os parâmetros id "61c2822b", start_date "2022-01-01 10:00:00", end_date "2022-01-01 13:00:00", room_id "room1" e user_id "user1"
-    Then a reserva de id "61c2822b", com os parâmetros start_date "2022-01-01 10:00:00", end_date "2022-01-01 13:00:00", room_id "room1" e user_id "user1" deve ser estar no array retornado
+  Scenario: Atualizar uma reserva existente
+    Given o ReservationService permite a atualização de uma reserva
+    And a reserva com id "61c2822b" existe
+    When uma requisição PUT for enviada para "/reservations/61c2822b" com os dados da reserva: user_id "user1", room_id "room1", start_date "2022-01-02 10:00:00" e end_date "2022-01-02 12:00:00"
+    Then o status da resposta deve ser "200"
+    And o JSON da resposta deve conter a reserva atualizada com id "61c2822b", user_id "user1", room_id "room1", start_date "2022-01-02 10:00:00" e end_date "2022-01-02 12:00:00"
+  
+  Scenario: Aprovar uma reserva
+    Given o ReservationService permite a aprovação de uma reserva
+    And a reserva com id "61c2822b" existe
+    When uma requisição PUT for enviada para "/reservations/61c2822b/reservation_approve"
+    Then o status da resposta deve ser "201"
+    And o JSON da resposta deve conter a reserva atualizada com id "61c2822b" e status "approved"
+  
+  Scenario: Negar uma reserva
+    Given o ReservationService permite a negação de uma reserva
+    And a reserva com id "61c2822b" existe
+    When uma requisição PUT for enviada para "/reservations/61c2822b/reservation_deny"
+    Then o status da resposta deve ser "201"
+    And o JSON da resposta deve conter a reserva atualizada com id "61c2822b" e status "denied"
