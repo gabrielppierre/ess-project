@@ -103,6 +103,13 @@ class HTTPResponses:
             message="Reservation created",
             status_code=201,
         )
+    
+    @staticmethod
+    def ROOM_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Room found",
+            status_code=200,
+        )
       
     @staticmethod
     def RESERVATION_UPDATED() -> HttpResponseModel:
@@ -112,6 +119,7 @@ class HTTPResponses:
         )
     
     @staticmethod
+<<<<<<< HEAD
     def RESERVATION_REMOVED() -> HttpResponseModel:
         return HttpResponseModel(
             message="Reservation removed",
@@ -132,6 +140,8 @@ class HTTPResponses:
         )
     
     @staticmethod
+=======
+>>>>>>> main
     def ROOM_NOT_FOUND() -> HttpResponseModel:
         return HttpResponseModel(
             message="Room not found",
