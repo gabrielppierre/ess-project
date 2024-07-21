@@ -1,7 +1,6 @@
-// src/app/home/components/EquipmentList.tsx
 import React from 'react';
 import { EquipmentModel } from '../models/Equipment';
-import { List, ListItem, ListItemText, IconButton, Box } from '@mui/material';
+import { List, ListItem, ListItemText, IconButton, Box, Paper } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -14,22 +13,24 @@ interface EquipmentListProps {
 const EquipmentList: React.FC<EquipmentListProps> = ({ equipments, onDelete, onEdit }) => {
   return (
     <Box>
-      <List>
-        {equipments.map((equipment) => (
-          <ListItem key={equipment.id}>
-            <ListItemText
-              primary={equipment.name}
-              secondary={`Description: ${equipment.description || 'N/A'}, Amount: ${equipment.amount}`}
-            />
-            <IconButton edge="end" aria-label="edit" onClick={() => onEdit(equipment)}>
-              <EditIcon />
-            </IconButton>
-            <IconButton edge="end" aria-label="delete" onClick={() => onDelete(equipment.id)}>
-              <DeleteIcon />
-            </IconButton>
-          </ListItem>
-        ))}
-      </List>
+      <Paper elevation={3}>
+        <List>
+          {equipments.map((equipment) => (
+            <ListItem key={equipment.id} sx={{ borderBottom: '1px solid #ccc' }}>
+              <ListItemText
+                primary={equipment.name}
+                secondary={`Descrição: ${equipment.description || 'N/A'}, Quantidade: ${equipment.amount}`}
+              />
+              <IconButton edge="end" aria-label="edit" onClick={() => onEdit(equipment)}>
+                <EditIcon />
+              </IconButton>
+              <IconButton edge="end" aria-label="delete" onClick={() => onDelete(equipment.id)}>
+                <DeleteIcon />
+              </IconButton>
+            </ListItem>
+          ))}
+        </List>
+      </Paper>
     </Box>
   );
 };

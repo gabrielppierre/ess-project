@@ -4,10 +4,12 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
+const generateRandomId = () => Math.random().toString(36).substring(2, 15);
+
 interface EquipmentFormProps {
   onSubmit: (equipment: EquipmentModel) => void;
-  selectedEquipment?: EquipmentModel;
-  setSelectedEquipment?: (equipment: EquipmentModel | null) => void;
+  selectedEquipment: EquipmentModel | null;
+  setSelectedEquipment: React.Dispatch<React.SetStateAction<EquipmentModel | null>>;
 }
 
 const EquipmentForm: React.FC<EquipmentFormProps> = ({ onSubmit, selectedEquipment, setSelectedEquipment }) => {
@@ -20,19 +22,23 @@ const EquipmentForm: React.FC<EquipmentFormProps> = ({ onSubmit, selectedEquipme
       setName(selectedEquipment.name);
       setDescription(selectedEquipment.description || '');
       setAmount(selectedEquipment.amount);
+    } else {
+      setName('');
+      setDescription('');
+      setAmount(0);
     }
   }, [selectedEquipment]);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const id = selectedEquipment ? selectedEquipment.id : generateRandomId(); // Gerar ID aleatório se novo
+    const id = selectedEquipment ? selectedEquipment.id : generateRandomId(); // Gerar ID aleatório
     onSubmit({ id, name, description, amount });
-    if (setSelectedEquipment) {
-      setSelectedEquipment(null); // Limpar seleção após envio
-    }
+    setSelectedEquipment(null);
   };
 
-  const generateRandomId = () => Math.random().toString(36).substring(2, 15);
+  const handleCancel = () => {
+    setSelectedEquipment(null);
+  };
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -61,8 +67,13 @@ const EquipmentForm: React.FC<EquipmentFormProps> = ({ onSubmit, selectedEquipme
         onChange={(e) => setAmount(parseInt(e.target.value))}
       />
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-        {selectedEquipment ? 'Save Changes' : 'Add Equipment'}
+        {selectedEquipment ? 'Salvar Alterações' : 'Adicionar Equipamento'}
       </Button>
+      {selectedEquipment && (
+        <Button fullWidth variant="outlined" onClick={handleCancel} sx={{ mb: 2 }}>
+          Cancelar
+        </Button>
+      )}
     </Box>
   );
 };

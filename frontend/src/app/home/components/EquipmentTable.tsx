@@ -1,45 +1,42 @@
 import React from 'react';
-import { EquipmentModel } from '../models/Equipment';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { EquipmentModel } from '../../models/Equipment';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Paper } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface EquipmentTableProps {
   equipments: EquipmentModel[];
   onDelete: (id: string) => void;
+  onEdit: (equipment: EquipmentModel) => void;
 }
 
-const EquipmentTable: React.FC<EquipmentTableProps> = ({ equipments, onDelete }) => {
+const EquipmentTable: React.FC<EquipmentTableProps> = ({ equipments, onDelete, onEdit }) => {
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Amount</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell>Nome</TableCell>
+            <TableCell>Descrição</TableCell>
+            <TableCell>Quantidade</TableCell>
+            <TableCell>Criado em</TableCell>
+            <TableCell>Ações</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {equipments.map((equipment) => (
             <TableRow key={equipment.id}>
-              <TableCell>{equipment.id}</TableCell>
               <TableCell>{equipment.name}</TableCell>
               <TableCell>{equipment.description}</TableCell>
               <TableCell>{equipment.amount}</TableCell>
+              <TableCell>{new Date(equipment.created_at).toLocaleDateString()}</TableCell>
               <TableCell>
-                <Button component={Link} to={`/equipment/edit/${equipment.id}`} variant="contained" color="primary">
-                  Edit
-                </Button>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => onDelete(equipment.id)}
-                  sx={{ ml: 2 }}
-                >
-                  Delete
-                </Button>
+                <IconButton onClick={() => onEdit(equipment)}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton onClick={() => onDelete(equipment.id)}>
+                  <DeleteIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}
