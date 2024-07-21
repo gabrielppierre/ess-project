@@ -1,5 +1,5 @@
 import React from 'react';
-import { EquipmentModel } from '../../models/Equipment';
+import { EquipmentModel } from '../models/Equipment';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Paper } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';

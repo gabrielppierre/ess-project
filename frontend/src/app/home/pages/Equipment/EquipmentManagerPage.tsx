@@ -182,16 +182,18 @@ const EquipmentManagerPage: React.FC = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <TextField
-                    label="Valor da Quantidade"
-                    variant="outlined"
-                    fullWidth
-                    value={quantityFilterValue}
-                    onChange={(e) => setQuantityFilterValue(e.target.value)}
-                    type="number"
-                  />
-                </Grid>
+                {quantityFilter && (
+                  <Grid item xs={12} sm={6} md={4}>
+                    <TextField
+                      label="Valor da Quantidade"
+                      variant="outlined"
+                      fullWidth
+                      value={quantityFilterValue}
+                      onChange={(e) => setQuantityFilterValue(e.target.value)}
+                      type="number"
+                    />
+                  </Grid>
+                )}
                 <Grid item xs={12} sm={6} md={4}>
                   <FormControl fullWidth variant="outlined">
                     <InputLabel>Ordenar por Data</InputLabel>
