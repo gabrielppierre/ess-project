@@ -14,6 +14,13 @@ class HTTPResponses:
     """
 
     @staticmethod
+    def DATA_FOUND(item_name: str) -> HttpResponseModel:
+        return HttpResponseModel(
+            message=f"{item_name} found",
+            status_code=200,
+        )
+
+    @staticmethod
     def ITEM_NOT_FOUND() -> HttpResponseModel:
         return HttpResponseModel(
             message="Item not found",
@@ -22,10 +29,7 @@ class HTTPResponses:
 
     @staticmethod
     def ITEM_FOUND() -> HttpResponseModel:
-        return HttpResponseModel(
-            message="Item found",
-            status_code=200,
-        )
+        return HTTPResponses.DATA_FOUND("Item")
 
     @staticmethod
     def ITEM_CREATED() -> HttpResponseModel:
@@ -50,10 +54,8 @@ class HTTPResponses:
     
     @staticmethod
     def REVIEW_FOUND() -> HttpResponseModel:
-        return HttpResponseModel(
-            message="Review found",
-            status_code=200,
-        )
+        return HTTPResponses.DATA_FOUND("Review")
+
     
     @staticmethod
     def REVIEW_CREATED() -> HttpResponseModel:
@@ -71,10 +73,8 @@ class HTTPResponses:
     
     @staticmethod
     def RATING_FOUND() -> HttpResponseModel:
-        return HttpResponseModel(
-            message="Rating found",
-            status_code=200,
-        )
+        return HTTPResponses.DATA_FOUND("Rating")
+
     
     @staticmethod
     def RATING_CREATED() -> HttpResponseModel:
@@ -92,10 +92,8 @@ class HTTPResponses:
     
     @staticmethod
     def RESERVATION_FOUND() -> HttpResponseModel:
-        return HttpResponseModel(
-            message="Reservation found",
-            status_code=200,
-        )
+        return HTTPResponses.DATA_FOUND("Reservation")
+
     
     @staticmethod
     def RESERVATION_CREATED() -> HttpResponseModel:
@@ -113,10 +111,7 @@ class HTTPResponses:
 
     @staticmethod
     def ROOM_FOUND() -> HttpResponseModel:
-        return HttpResponseModel(
-            message="Room found",
-            status_code=200,
-        )
+        return HTTPResponses.DATA_FOUND("Room")
 
     def RESERVATION_UPDATED() -> HttpResponseModel:
         return HttpResponseModel(
@@ -162,10 +157,8 @@ class HTTPResponses:
 
     @staticmethod
     def USER_FOUND() -> HttpResponseModel:
-        return HttpResponseModel(
-            message="User found",
-            status_code=200,
-        )
+        return HTTPResponses.DATA_FOUND("User")
+
 
     @staticmethod
     def ROOM_DELETED() -> HttpResponseModel:
@@ -190,10 +183,8 @@ class HTTPResponses:
 
     @staticmethod
     def EQUIPMENT_FOUND() -> HttpResponseModel:
-        return HttpResponseModel(
-            message="Equipment Found",
-            status_code=404
-        )
+        return HTTPResponses.DATA_FOUND("Equipment")
+
 
     @staticmethod
     def EQUIPMENT_NOT_FOUND() -> HttpResponseModel:
