@@ -119,7 +119,6 @@ class HTTPResponses:
         )
     
     @staticmethod
-<<<<<<< HEAD
     def RESERVATION_REMOVED() -> HttpResponseModel:
         return HttpResponseModel(
             message="Reservation removed",
@@ -140,8 +139,6 @@ class HTTPResponses:
         )
     
     @staticmethod
-=======
->>>>>>> main
     def ROOM_NOT_FOUND() -> HttpResponseModel:
         return HttpResponseModel(
             message="Room not found",

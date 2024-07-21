@@ -1,3 +1,4 @@
+// src/App.tsx
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './app/home/pages/HomePage';
@@ -6,11 +7,12 @@ import ListTests from './app/home/pages/ListTests';
 import AddUserPage from './app/home/pages/User/AddUserPage';
 import UpdateUserPage from './app/home/pages/User/UpdateUserPage';
 import DeleteUserPage from './app/home/pages/User/DeleteUserPage';
+import EquipmentPage from './app/home/pages/Equipment/EquipmentPage'; 
 
 const router = createBrowserRouter([
   {
     path: '/',
-    Component: HomePage,
+    Component: EquipmentPage,
   },
   {
     path: '/create-test',
@@ -31,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: '/users/delete/:userId',
     Component: DeleteUserPage,
+  },
+  {
+    path: '/equipment',
+    Component: EquipmentPage,
   },
 ]);
 
