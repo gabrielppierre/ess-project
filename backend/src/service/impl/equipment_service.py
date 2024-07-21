@@ -1,4 +1,4 @@
-# backend/src/service/impl/equipment_service.py
+# backend\src\service\impl\equipment_service.py
 
 from src.schemas.response import HttpResponseModel
 from src.service.meta.equipment_service_meta import EquipmentServiceMeta
@@ -6,20 +6,11 @@ from src.db.__init__ import database as db
 from src.schemas.equipment import EquipmentModel, EquipmentGet
 from src.db.serializers.equipment_serializers import equipment_response_entity
 from typing import Union
-from datetime import datetime
-from dateutil import tz
 
 class EquipmentService(EquipmentServiceMeta):
 
     @staticmethod
-    def get_brasilia_time() -> datetime:
-        brasilia_tz = tz.gettz('America/Sao_Paulo')
-        return datetime.now(brasilia_tz)
-
-    @staticmethod
     def create_equipment(equipment_data: EquipmentModel) -> EquipmentGet:
-        if equipment_data.created_at is None:
-            equipment_data.created_at = EquipmentService.get_brasilia_time()
         db.insert_item('equipments', equipment_data.dict())
         equipment_response = equipment_response_entity(equipment_data.dict())
         return EquipmentGet(**equipment_response)

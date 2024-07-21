@@ -32,7 +32,7 @@ def create_user(user: dict) -> HttpResponseModel:
     "/{user_id}",
     response_model=HttpResponseModel,
     status_code=status.HTTP_200_OK,
-    description="Update user",
+    description="Create a new user",
     tags=["users"],
     responses={
         status.HTTP_200_OK: {
@@ -91,3 +91,4 @@ def delete_user(user_id: str) -> HttpResponseModel:
     if not user_delete_response:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     return user_delete_response
+
