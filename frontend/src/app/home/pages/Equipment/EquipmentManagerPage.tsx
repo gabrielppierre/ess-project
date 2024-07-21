@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import EquipmentForm from '../../components/EquipmentForm';
 import EquipmentTable from '../../components/EquipmentTable';
 import { EquipmentModel } from '../../models/Equipment';
-import { Container, Typography, Box, Alert, Snackbar, Paper, Button, Divider, TextField, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import { Container, Typography, Box, Alert, Snackbar, Paper, Button, Divider, TextField, MenuItem, Select, InputLabel, FormControl, Grid, Collapse } from '@mui/material';
 import axios from 'axios';
 
 const EquipmentManagerPage: React.FC = () => {
@@ -14,7 +14,10 @@ const EquipmentManagerPage: React.FC = () => {
   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [quantityFilter, setQuantityFilter] = useState<string>('');
+  const [quantityFilterValue, setQuantityFilterValue] = useState<number | string>('');
   const [dateSort, setDateSort] = useState<string>('');
+  const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
+  const [showList, setShowList] = useState<boolean>(true);
 
   useEffect(() => {
     fetchEquipments();
@@ -30,8 +33,19 @@ const EquipmentManagerPage: React.FC = () => {
       );
     }
 
-    if (quantityFilter) {
-      filtered = filtered.filter(equipment => equipment.amount === parseInt(quantityFilter));
+    if (quantityFilter && quantityFilterValue !== '') {
+      filtered = filtered.filter(equipment => {
+        const amount = equipment.amount;
+        const filterValue = parseInt(quantityFilterValue as string);
+        if (quantityFilter === 'above') {
+          return amount > filterValue;
+        } else if (quantityFilter === 'below') {
+          return amount < filterValue;
+        } else if (quantityFilter === 'equal') {
+          return amount === filterValue;
+        }
+        return false;
+      });
     }
 
     if (dateSort) {
@@ -46,7 +60,7 @@ const EquipmentManagerPage: React.FC = () => {
     }
 
     setFilteredEquipments(filtered);
-  }, [searchQuery, quantityFilter, dateSort, equipments]);
+  }, [searchQuery, quantityFilter, quantityFilterValue, dateSort, equipments]);
 
   const fetchEquipments = async () => {
     try {
@@ -124,42 +138,81 @@ const EquipmentManagerPage: React.FC = () => {
             setSelectedEquipment={setSelectedEquipment}
           />
         </Box>
-        <TextField
-          label="Buscar Equipamentos"
-          variant="outlined"
-          fullWidth
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          sx={{ mb: 2 }}
-        />
-        <FormControl fullWidth variant="outlined" sx={{ mb: 2 }}>
-          <InputLabel>Filtrar por Quantidade</InputLabel>
-          <Select
-            value={quantityFilter}
-            onChange={(e) => setQuantityFilter(e.target.value)}
-            label="Filtrar por Quantidade"
+        <Box sx={{ mb: 2 }}>
+          <Button
+            variant="contained"
+            onClick={() => setShowList(!showList)}
+            sx={{ mr: 2 }}
           >
-            <MenuItem value="">Nenhum</MenuItem>
-            {equipments.map((equipment) => (
-              <MenuItem key={equipment.id} value={equipment.amount}>
-                {equipment.amount}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl fullWidth variant="outlined" sx={{ mb: 4 }}>
-          <InputLabel>Ordenar por Data</InputLabel>
-          <Select
-            value={dateSort}
-            onChange={(e) => setDateSort(e.target.value)}
-            label="Ordenar por Data"
-          >
-            <MenuItem value="">Nenhum</MenuItem>
-            <MenuItem value="recent">Mais Recentes</MenuItem>
-            <MenuItem value="oldest">Mais Antigos</MenuItem>
-          </Select>
-        </FormControl>
-        <EquipmentTable equipments={filteredEquipments} onDelete={handleDelete} onEdit={setSelectedEquipment} />
+            {showList ? 'Esconder Lista' : 'Mostrar Lista'}
+          </Button>
+          {showList && (
+            <Button
+              variant="contained"
+              onClick={() => setFiltersOpen(!filtersOpen)}
+            >
+              {filtersOpen ? 'Ocultar Filtros' : 'Mostrar Filtros'}
+            </Button>
+          )}
+        </Box>
+        {showList && (
+          <>
+            <TextField
+              label="Buscar Equipamentos"
+              variant="outlined"
+              fullWidth
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              sx={{ mb: 2 }}
+            />
+            <Collapse in={filtersOpen} sx={{ mb: 2 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={4}>
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel>Filtrar por Quantidade</InputLabel>
+                    <Select
+                      value={quantityFilter}
+                      onChange={(e) => setQuantityFilter(e.target.value)}
+                      label="Filtrar por Quantidade"
+                    >
+                      <MenuItem value="">Nenhum</MenuItem>
+                      <MenuItem value="above">Acima de</MenuItem>
+                      <MenuItem value="below">Abaixo de</MenuItem>
+                      <MenuItem value="equal">Igual a</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <TextField
+                    label="Valor da Quantidade"
+                    variant="outlined"
+                    fullWidth
+                    value={quantityFilterValue}
+                    onChange={(e) => setQuantityFilterValue(e.target.value)}
+                    type="number"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel>Ordenar por Data</InputLabel>
+                    <Select
+                      value={dateSort}
+                      onChange={(e) => setDateSort(e.target.value)}
+                      label="Ordenar por Data"
+                    >
+                      <MenuItem value="">Nenhum</MenuItem>
+                      <MenuItem value="recent">Mais Recentes</MenuItem>
+                      <MenuItem value="oldest">Mais Antigos</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </Collapse>
+            <Box mt={4}>
+              <EquipmentTable equipments={filteredEquipments} onDelete={handleDelete} onEdit={setSelectedEquipment} />
+            </Box>
+          </>
+        )}
         <Snackbar
           open={openSnackbar}
           autoHideDuration={6000}
