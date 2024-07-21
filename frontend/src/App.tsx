@@ -8,12 +8,11 @@ import AddUserPage from './app/home/pages/User/AddUserPage';
 import UpdateUserPage from './app/home/pages/User/UpdateUserPage';
 import DeleteUserPage from './app/home/pages/User/DeleteUserPage';
 import EquipmentPage from './app/home/pages/Equipment/EquipmentPage'; 
-import DeleteEquipmentPage from './app/home/pages/Equipment/EditEquipmentPage'; 
 import EquipmentManagerPage from './app/home/pages/Equipment/EquipmentManagerPage'
 const router = createBrowserRouter([
   {
     path: '/',
-    Component: EquipmentManagerPage,
+    Component: HomePage,
   },
   {
     path: '/create-test',
@@ -37,7 +36,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/equipment',
-    Component: EquipmentPage,
+    Component: EquipmentManagerPage,
   },
 ]);
 
