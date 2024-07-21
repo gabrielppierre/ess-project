@@ -6,7 +6,7 @@ import ListTests from './app/home/pages/ListTests';
 import AddUserPage from './app/home/pages/User/AddUserPage';
 import UpdateUserPage from './app/home/pages/User/UpdateUserPage';
 import DeleteUserPage from './app/home/pages/User/DeleteUserPage';
-
+import MenuPage from './app/home/pages/MenuPage';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -29,8 +29,13 @@ const router = createBrowserRouter([
     Component: UpdateUserPage,
   },
   {
-    path: '/users/delete/:userId',
+    path: '/delete',
     Component: DeleteUserPage,
+  },
+
+  {
+    path: '/menu',
+    Component: MenuPage,
   },
 ]);
 

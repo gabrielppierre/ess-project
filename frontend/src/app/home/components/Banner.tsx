@@ -12,6 +12,12 @@ const Banner: React.FC = () => {
     navigate('/users');
   };
 
+  const handleLogin = () => {
+    const userId = '581a68ac'; 
+    sessionStorage.setItem('userId', userId);
+    navigate('/menu');
+  };
+
   return (
     <Box sx={{ backgroundColor: '#f5f5f5', padding: '50px 0', textAlign: 'center' }}>
       <Container>
@@ -21,7 +27,7 @@ const Banner: React.FC = () => {
         <Typography variant="h5" gutterBottom>
           Reserve a sala perfeita para sua reunião
         </Typography>
-        <Button variant="contained" color="primary" size="large" style={{ margin: '0 10px' }}>
+        <Button variant="contained" color="primary" size="large" style={{ margin: '0 10px' }} onClick={handleLogin}>
           Login
         </Button>
         <Button

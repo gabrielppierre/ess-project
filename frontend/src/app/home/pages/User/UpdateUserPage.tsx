@@ -13,7 +13,7 @@ const UpdateUserPage: React.FC = () => {
 
   return (
     <div>
-      <h1>Update User</h1>
+     
       <UpdateUserForm userId={userId} /> {/* Passando userId para o componente UpdateUserForm */}
     </div>
   );
