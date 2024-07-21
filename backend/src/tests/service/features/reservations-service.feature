@@ -1,4 +1,4 @@
-Feature: Reservations API
+Feature: Reservations Service
 
 # Service
 Scenario: Buscar todas as reservas
