@@ -3,7 +3,7 @@ from typing import Optional
 from datetime import datetime
 
 class EquipmentModel(BaseModel):
-    id: str
+    id: Optional[str] = None
     name: str
     description: Optional[str] = None
     amount: int

@@ -30,22 +30,6 @@ class ReservationSchema(ModelSchema):
       "bson_type": "string",
       "description": "The reservation's end date"
     },
-    "activity": {
-        "bson_type": "string",
-        "description": "Activity that will be done"
-    },
-    "teacher": {
-        "bson_type": "string",
-        "description": "Associated teacher"
-    },
-    "activity": {
-        "bson_type": "string",
-        "description": "Activity that will be done"
-    },
-    "teacher": {
-        "bson_type": "string",
-        "description": "Associated teacher"
-    },
     "created_at": {
       "bson_type": "string",
       "description": "The reservation's creation time"
@@ -58,8 +42,9 @@ class ReservationSchema(ModelSchema):
         "properties": self.properties
     }
 
-    return {
-        "bson_type": self.bson_type,
-        "required": self.required,
-        "properties": self.properties
-    }
+  def get(self) -> dict:
+        return {
+            "bson_type": self.bson_type,
+            "required": self.required,
+            "properties": self.properties
+        }
