@@ -32,7 +32,7 @@ const EquipmentTable: React.FC<EquipmentTableProps> = ({
             <TableCell>Nome</TableCell>
             <TableCell>Descrição</TableCell>
             <TableCell>Quantidade</TableCell>
-            <TableCell>Criado em</TableCell>
+            <TableCell>Adicionado em</TableCell>
             <TableCell>Ações</TableCell>
           </TableRow>
         </TableHead>

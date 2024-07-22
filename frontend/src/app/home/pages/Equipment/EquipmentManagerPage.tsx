@@ -133,14 +133,13 @@ const EquipmentManagerPage: React.FC = () => {
       setMessage("Equipamento atualizado com sucesso!");
       setError("");
       setSelectedEquipment(null);
-      setOpenSnackbar(true);
     } catch (err) {
       setError("Erro ao atualizar equipamento.");
       setMessage("");
       setOpenSnackbar(true);
       console.error(err);
     }
-  };
+  };  
 
   const handleDelete = async (id: string) => {
     try {
