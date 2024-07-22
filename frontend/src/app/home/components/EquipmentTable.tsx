@@ -1,8 +1,17 @@
-import React from 'react';
-import { EquipmentModel } from '../models/Equipment';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Paper } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import React from "react";
+import { EquipmentModel } from "../models/Equipment";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  IconButton,
+  Paper,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface EquipmentTableProps {
   equipments: EquipmentModel[];
@@ -10,7 +19,11 @@ interface EquipmentTableProps {
   onEdit: (equipment: EquipmentModel) => void;
 }
 
-const EquipmentTable: React.FC<EquipmentTableProps> = ({ equipments, onDelete, onEdit }) => {
+const EquipmentTable: React.FC<EquipmentTableProps> = ({
+  equipments,
+  onDelete,
+  onEdit,
+}) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -29,7 +42,9 @@ const EquipmentTable: React.FC<EquipmentTableProps> = ({ equipments, onDelete, o
               <TableCell>{equipment.name}</TableCell>
               <TableCell>{equipment.description}</TableCell>
               <TableCell>{equipment.amount}</TableCell>
-              <TableCell>{new Date(equipment.created_at).toLocaleDateString()}</TableCell>
+              <TableCell>
+                {new Date(equipment.created_at).toLocaleDateString()}
+              </TableCell>
               <TableCell>
                 <IconButton onClick={() => onEdit(equipment)}>
                   <EditIcon />

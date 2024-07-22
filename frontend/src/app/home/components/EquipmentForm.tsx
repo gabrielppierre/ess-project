@@ -1,30 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { EquipmentModel } from '../models/Equipment';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import React, { useState, useEffect } from "react";
+import { EquipmentModel } from "../models/Equipment";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 const generateRandomId = () => Math.random().toString(36).substring(2, 15);
 
 interface EquipmentFormProps {
   onSubmit: (equipment: EquipmentModel) => void;
   selectedEquipment: EquipmentModel | null;
-  setSelectedEquipment: React.Dispatch<React.SetStateAction<EquipmentModel | null>>;
+  setSelectedEquipment: React.Dispatch<
+    React.SetStateAction<EquipmentModel | null>
+  >;
 }
 
-const EquipmentForm: React.FC<EquipmentFormProps> = ({ onSubmit, selectedEquipment, setSelectedEquipment }) => {
-  const [name, setName] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
+const EquipmentForm: React.FC<EquipmentFormProps> = ({
+  onSubmit,
+  selectedEquipment,
+  setSelectedEquipment,
+}) => {
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
 
   useEffect(() => {
     if (selectedEquipment) {
       setName(selectedEquipment.name);
-      setDescription(selectedEquipment.description || '');
+      setDescription(selectedEquipment.description || "");
       setAmount(selectedEquipment.amount);
     } else {
-      setName('');
-      setDescription('');
+      setName("");
+      setDescription("");
       setAmount(0);
     }
   }, [selectedEquipment]);
@@ -67,10 +73,15 @@ const EquipmentForm: React.FC<EquipmentFormProps> = ({ onSubmit, selectedEquipme
         onChange={(e) => setAmount(parseInt(e.target.value))}
       />
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-        {selectedEquipment ? 'Salvar Alterações' : 'Adicionar Equipamento'}
+        {selectedEquipment ? "Salvar Alterações" : "Adicionar Equipamento"}
       </Button>
       {selectedEquipment && (
-        <Button fullWidth variant="outlined" onClick={handleCancel} sx={{ mb: 2 }}>
+        <Button
+          fullWidth
+          variant="outlined"
+          onClick={handleCancel}
+          sx={{ mb: 2 }}
+        >
           Cancelar
         </Button>
       )}

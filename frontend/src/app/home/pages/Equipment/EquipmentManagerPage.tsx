@@ -1,21 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import EquipmentForm from '../../components/EquipmentForm';
-import EquipmentTable from '../../components/EquipmentTable';
-import { EquipmentModel } from '../../models/Equipment';
-import { Container, Typography, Box, Alert, Snackbar, Paper, Button, Divider, TextField, MenuItem, Select, InputLabel, FormControl, Grid, Collapse } from '@mui/material';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import EquipmentForm from "../../components/EquipmentForm";
+import EquipmentTable from "../../components/EquipmentTable";
+import { EquipmentModel } from "../../models/Equipment";
+import {
+  Container,
+  Typography,
+  Box,
+  Alert,
+  Snackbar,
+  Paper,
+  Button,
+  Divider,
+  TextField,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Grid,
+  Collapse,
+} from "@mui/material";
+import axios from "axios";
 
 const EquipmentManagerPage: React.FC = () => {
   const [equipments, setEquipments] = useState<EquipmentModel[]>([]);
-  const [filteredEquipments, setFilteredEquipments] = useState<EquipmentModel[]>([]);
-  const [selectedEquipment, setSelectedEquipment] = useState<EquipmentModel | null>(null);
-  const [message, setMessage] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [filteredEquipments, setFilteredEquipments] = useState<
+    EquipmentModel[]
+  >([]);
+  const [selectedEquipment, setSelectedEquipment] =
+    useState<EquipmentModel | null>(null);
+  const [message, setMessage] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [quantityFilter, setQuantityFilter] = useState<string>('');
-  const [quantityFilterValue, setQuantityFilterValue] = useState<number | string>('');
-  const [dateSort, setDateSort] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [quantityFilter, setQuantityFilter] = useState<string>("");
+  const [quantityFilterValue, setQuantityFilterValue] = useState<
+    number | string
+  >("");
+  const [dateSort, setDateSort] = useState<string>("");
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
   const [showList, setShowList] = useState<boolean>(true);
 
@@ -27,21 +48,25 @@ const EquipmentManagerPage: React.FC = () => {
     let filtered = equipments;
 
     if (searchQuery) {
-      filtered = filtered.filter(equipment =>
-        equipment.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (equipment.description && equipment.description.toLowerCase().includes(searchQuery.toLowerCase()))
+      filtered = filtered.filter(
+        (equipment) =>
+          equipment.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (equipment.description &&
+            equipment.description
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()))
       );
     }
 
-    if (quantityFilter && quantityFilterValue !== '') {
-      filtered = filtered.filter(equipment => {
+    if (quantityFilter && quantityFilterValue !== "") {
+      filtered = filtered.filter((equipment) => {
         const amount = equipment.amount;
         const filterValue = parseInt(quantityFilterValue as string);
-        if (quantityFilter === 'above') {
+        if (quantityFilter === "above") {
           return amount > filterValue;
-        } else if (quantityFilter === 'below') {
+        } else if (quantityFilter === "below") {
           return amount < filterValue;
-        } else if (quantityFilter === 'equal') {
+        } else if (quantityFilter === "equal") {
           return amount === filterValue;
         }
         return false;
@@ -50,10 +75,14 @@ const EquipmentManagerPage: React.FC = () => {
 
     if (dateSort) {
       filtered = filtered.sort((a, b) => {
-        if (dateSort === 'recent') {
-          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-        } else if (dateSort === 'oldest') {
-          return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+        if (dateSort === "recent") {
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
+        } else if (dateSort === "oldest") {
+          return (
+            new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+          );
         }
         return 0;
       });
@@ -64,26 +93,31 @@ const EquipmentManagerPage: React.FC = () => {
 
   const fetchEquipments = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/equipment/');
+      const response = await axios.get("http://localhost:8000/equipment/");
       setEquipments(response.data);
     } catch (err) {
-      setError('Erro ao carregar equipamentos.');
+      setError("Erro ao carregar equipamentos.");
       setOpenSnackbar(true);
       console.error(err);
     }
   };
 
-  const handleAdd = async (equipment: Omit<EquipmentModel, 'id' | 'created_at'>) => {
+  const handleAdd = async (
+    equipment: Omit<EquipmentModel, "id" | "created_at">
+  ) => {
     try {
-      await axios.post('http://localhost:8000/equipment/', { ...equipment, created_at: new Date().toISOString() });
+      await axios.post("http://localhost:8000/equipment/", {
+        ...equipment,
+        created_at: new Date().toISOString(),
+      });
       fetchEquipments();
-      setMessage('Equipamento adicionado com sucesso!');
-      setError('');
+      setMessage("Equipamento adicionado com sucesso!");
+      setError("");
       setSelectedEquipment(null);
       setOpenSnackbar(true);
     } catch (err) {
-      setError('Erro ao adicionar equipamento.');
-      setMessage('');
+      setError("Erro ao adicionar equipamento.");
+      setMessage("");
       setOpenSnackbar(true);
       console.error(err);
     }
@@ -91,15 +125,18 @@ const EquipmentManagerPage: React.FC = () => {
 
   const handleEdit = async (equipment: EquipmentModel) => {
     try {
-      await axios.put(`http://localhost:8000/equipment/${equipment.id}`, equipment);
+      await axios.put(
+        `http://localhost:8000/equipment/${equipment.id}`,
+        equipment
+      );
       fetchEquipments();
-      setMessage('Equipamento atualizado com sucesso!');
-      setError('');
+      setMessage("Equipamento atualizado com sucesso!");
+      setError("");
       setSelectedEquipment(null);
       setOpenSnackbar(true);
     } catch (err) {
-      setError('Erro ao atualizar equipamento.');
-      setMessage('');
+      setError("Erro ao atualizar equipamento.");
+      setMessage("");
       setOpenSnackbar(true);
       console.error(err);
     }
@@ -109,12 +146,12 @@ const EquipmentManagerPage: React.FC = () => {
     try {
       await axios.delete(`http://localhost:8000/equipment/${id}`);
       fetchEquipments();
-      setMessage('Equipamento removido com sucesso!');
-      setError('');
+      setMessage("Equipamento removido com sucesso!");
+      setError("");
       setOpenSnackbar(true);
     } catch (err) {
-      setError('Erro ao remover equipamento.');
-      setMessage('');
+      setError("Erro ao remover equipamento.");
+      setMessage("");
       setOpenSnackbar(true);
       console.error(err);
     }
@@ -144,14 +181,14 @@ const EquipmentManagerPage: React.FC = () => {
             onClick={() => setShowList(!showList)}
             sx={{ mr: 2 }}
           >
-            {showList ? 'Esconder Lista' : 'Mostrar Lista'}
+            {showList ? "Esconder Lista" : "Mostrar Lista"}
           </Button>
           {showList && (
             <Button
               variant="contained"
               onClick={() => setFiltersOpen(!filtersOpen)}
             >
-              {filtersOpen ? 'Ocultar Filtros' : 'Mostrar Filtros'}
+              {filtersOpen ? "Ocultar Filtros" : "Mostrar Filtros"}
             </Button>
           )}
         </Box>
@@ -211,7 +248,11 @@ const EquipmentManagerPage: React.FC = () => {
               </Grid>
             </Collapse>
             <Box mt={4}>
-              <EquipmentTable equipments={filteredEquipments} onDelete={handleDelete} onEdit={setSelectedEquipment} />
+              <EquipmentTable
+                equipments={filteredEquipments}
+                onDelete={handleDelete}
+                onEdit={setSelectedEquipment}
+              />
             </Box>
           </>
         )}

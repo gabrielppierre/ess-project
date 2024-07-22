@@ -1,7 +1,6 @@
-// src/forms/UpdateUserForm.tsx
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Container, TextField, Button, Typography, Box, Alert } from '@mui/material';
 
 interface UpdateUserFormProps {
   userId: string; // userId é obrigatório
@@ -43,9 +42,11 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({ userId }) => {
     axios.put(`http://localhost:8000/users/${userId}`, userData)
       .then(response => {
         setSuccessMessage('User updated successfully');
+        setError(null);
       })
       .catch(error => {
         setError('Error updating user');
+        setSuccessMessage(null);
       });
   };
 
@@ -58,60 +59,76 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({ userId }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Email:</label>
-        <input
-          type="email"
+    <Container maxWidth="sm">
+      <Typography variant="h4" gutterBottom>
+        Update User
+      </Typography>
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email"
           name="email"
+          autoComplete="email"
           value={userData.email}
           onChange={handleChange}
-          required
         />
-      </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
+        <TextField
+          margin="normal"
+          required
+          fullWidth
           name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
           value={userData.password}
           onChange={handleChange}
-          required
         />
-      </div>
-      <div>
-        <label>CPF:</label>
-        <input
-          type="text"
+        <TextField
+          margin="normal"
+          required
+          fullWidth
           name="cpf"
+          label="CPF"
+          id="cpf"
           value={userData.cpf}
           onChange={handleChange}
-          required
         />
-      </div>
-      <div>
-        <label>Name:</label>
-        <input
-          type="text"
+        <TextField
+          margin="normal"
+          required
+          fullWidth
           name="name"
+          label="Name"
+          id="name"
           value={userData.name}
           onChange={handleChange}
-          required
         />
-      </div>
-      <div>
-        <label>Role:</label>
-        <input
-          type="text"
+        <TextField
+          margin="normal"
+          required
+          fullWidth
           name="role"
+          label="Role"
+          id="role"
           value={userData.role}
           onChange={handleChange}
-          required
         />
-      </div>
-      <button type="submit">Update User</button>
-      {successMessage && <p>{successMessage}</p>}
-    </form>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Update User
+        </Button>
+        {successMessage && <Alert severity="success">{successMessage}</Alert>}
+        {error && <Alert severity="error">{error}</Alert>}
+      </Box>
+    </Container>
   );
 };
 

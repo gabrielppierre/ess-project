@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { EquipmentModel } from '../models/Equipment';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import React, { useState, useEffect } from "react";
+import { EquipmentModel } from "../models/Equipment";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 interface EditEquipmentFormProps {
   equipment: EquipmentModel;
   onSubmit: (equipment: EquipmentModel) => Promise<void>; // Atualize para Promise<void> se for assíncrono
 }
 
-const EditEquipmentForm: React.FC<EditEquipmentFormProps> = ({ equipment, onSubmit }) => {
+const EditEquipmentForm: React.FC<EditEquipmentFormProps> = ({
+  equipment,
+  onSubmit,
+}) => {
   const [name, setName] = useState<string>(equipment.name);
-  const [description, setDescription] = useState<string>(equipment.description || '');
+  const [description, setDescription] = useState<string>(
+    equipment.description || ""
+  );
   const [amount, setAmount] = useState<number>(equipment.amount);
 
   useEffect(() => {
     setName(equipment.name);
-    setDescription(equipment.description || '');
+    setDescription(equipment.description || "");
     setAmount(equipment.amount);
   }, [equipment]);
 

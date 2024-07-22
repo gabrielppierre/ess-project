@@ -74,4 +74,4 @@ class UserService(UserServiceMeta):
             return HttpResponseModel(
                 message=HTTPResponses.USER_NOT_FOUND().message,
                 status_code=HTTPResponses.USER_NOT_FOUND().status_code
-            )
+            )   
