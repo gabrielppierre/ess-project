@@ -9,6 +9,7 @@ import UpdateUserPage from "./app/home/pages/User/UpdateUserPage";
 import DeleteUserPage from "./app/home/pages/User/DeleteUserPage";
 import EquipmentPage from "./app/home/pages/Equipment/EquipmentPage";
 import EquipmentManagerPage from "./app/home/pages/Equipment/EquipmentManagerPage";
+import ReservationsManagementPage from "./app/home/pages/ReservationsAdmin/ReservationsPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/equipment",
     Component: EquipmentManagerPage,
+  },
+  {
+    path: "/admin/reservations",
+    Component: ReservationsManagementPage,
   },
 ]);
 

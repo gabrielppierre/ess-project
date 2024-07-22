@@ -1,0 +1,196 @@
+import React, { useState, useEffect } from "react";
+import ReservationsTable from "../../components/ReservationsTable";
+import { EquipmentModel } from "../../models/Equipment";
+import {
+  Container,
+  Typography,
+  Box,
+  Snackbar,
+  Paper,
+  Button,
+  Divider,
+  TextField,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Grid,
+  Collapse,
+} from "@mui/material";
+import axios from "axios";
+import { ReservationModel } from "../../models/Reservations";
+
+const ReservationsManagementPage: React.FC = () => {
+  const [reservations, setReservations] = useState<ReservationModel[]>([]);
+  const [filteredReservations, setFilteredReservations] = useState<
+    ReservationModel[]
+  >([]);
+  const [message, setMessage] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [quantityFilter, setQuantityFilter] = useState<string>("");
+  const [quantityFilterValue, setQuantityFilterValue] = useState<
+    number | string
+  >("");
+  const [dateSort, setDateSort] = useState<string>("");
+  const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
+  const [showList, setShowList] = useState<boolean>(true);
+
+  useEffect(() => {
+    fetchReservations();
+  }, []);
+
+  useEffect(() => {
+    let filtered = reservations;
+
+    if (searchQuery) {
+      filtered = filtered.filter(
+        (equipment) =>
+          equipment.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (equipment.description &&
+            equipment.description
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()))
+      );
+    }
+
+    if (quantityFilter && quantityFilterValue !== "") {
+      filtered = filtered.filter((equipment) => {
+        const amount = equipment.amount;
+        const filterValue = parseInt(quantityFilterValue as string);
+        if (quantityFilter === "above") {
+          return amount > filterValue;
+        } else if (quantityFilter === "below") {
+          return amount < filterValue;
+        } else if (quantityFilter === "equal") {
+          return amount === filterValue;
+        }
+        return false;
+      });
+    }
+
+    if (dateSort) {
+      filtered = filtered.sort((a, b) => {
+        if (dateSort === "recent") {
+          return (
+            new Date(b.created_at!).getTime() -
+            new Date(a.created_at!).getTime()
+          );
+        } else if (dateSort === "oldest") {
+          return (
+            new Date(a.created_at!).getTime() -
+            new Date(b.created_at!).getTime()
+          );
+        }
+        return 0;
+      });
+    }
+
+    setFilteredReservations(filtered);
+  }, [
+    searchQuery,
+    quantityFilter,
+    quantityFilterValue,
+    dateSort,
+    reservations,
+  ]);
+
+  const fetchReservations = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/reservations/");
+      setReservations(response.data);
+    } catch (err) {
+      setError("Erro ao carregar equipamentos.");
+      setOpenSnackbar(true);
+      console.error(err);
+    }
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
+  return (
+    <Container maxWidth="md" sx={{ mt: 4 }}>
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Histórico de reservas
+        </Typography>
+        <Divider sx={{ mb: 3 }} />
+        <Box sx={{ mb: 2 }}></Box>
+        <>
+          <TextField
+            label="Buscar Reservas"
+            variant="outlined"
+            fullWidth
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            sx={{ mb: 2 }}
+          />
+          <Collapse in={filtersOpen} sx={{ mb: 2 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6} md={4}>
+                <FormControl fullWidth variant="outlined">
+                  <InputLabel>Filtrar por Quantidade</InputLabel>
+                  <Select
+                    value={quantityFilter}
+                    onChange={(e) => setQuantityFilter(e.target.value)}
+                    label="Filtrar por Quantidade"
+                  >
+                    <MenuItem value="">Nenhum</MenuItem>
+                    <MenuItem value="above">Acima de</MenuItem>
+                    <MenuItem value="below">Abaixo de</MenuItem>
+                    <MenuItem value="equal">Igual a</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              {quantityFilter && (
+                <Grid item xs={12} sm={6} md={4}>
+                  <TextField
+                    label="Valor da Quantidade"
+                    variant="outlined"
+                    fullWidth
+                    value={quantityFilterValue}
+                    onChange={(e) => setQuantityFilterValue(e.target.value)}
+                    type="number"
+                  />
+                </Grid>
+              )}
+              <Grid item xs={12} sm={6} md={4}>
+                <FormControl fullWidth variant="outlined">
+                  <InputLabel>Ordenar por Data</InputLabel>
+                  <Select
+                    value={dateSort}
+                    onChange={(e) => setDateSort(e.target.value)}
+                    label="Ordenar por Data"
+                  >
+                    <MenuItem value="">Nenhum</MenuItem>
+                    <MenuItem value="recent">Mais Recentes</MenuItem>
+                    <MenuItem value="oldest">Mais Antigos</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Collapse>
+          <Box mt={4}>
+            <ReservationsTable reservations={filteredReservations} />
+          </Box>
+        </>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+          message={message || error}
+          action={
+            <Button color="inherit" size="small" onClick={handleCloseSnackbar}>
+              Fechar
+            </Button>
+          }
+        />
+      </Paper>
+    </Container>
+  );
+};
+
+export default ReservationsManagementPage;
