@@ -47,45 +47,25 @@ const ReservationsManagementPage: React.FC = () => {
     if (searchQuery) {
       filtered = filtered.filter(
         (equipment) =>
-          equipment.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (equipment.description &&
-            equipment.description
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase()))
+          equipment.room.name
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          equipment.user.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
-    if (quantityFilter && quantityFilterValue !== "") {
-      filtered = filtered.filter((equipment) => {
-        const amount = equipment.amount;
-        const filterValue = parseInt(quantityFilterValue as string);
-        if (quantityFilter === "above") {
-          return amount > filterValue;
-        } else if (quantityFilter === "below") {
-          return amount < filterValue;
-        } else if (quantityFilter === "equal") {
-          return amount === filterValue;
-        }
-        return false;
-      });
-    }
-
-    if (dateSort) {
-      filtered = filtered.sort((a, b) => {
-        if (dateSort === "recent") {
-          return (
-            new Date(b.created_at!).getTime() -
-            new Date(a.created_at!).getTime()
-          );
-        } else if (dateSort === "oldest") {
-          return (
-            new Date(a.created_at!).getTime() -
-            new Date(b.created_at!).getTime()
-          );
-        }
-        return 0;
-      });
-    }
+    filtered = filtered.sort((a, b) => {
+      if (dateSort === "recent") {
+        return (
+          new Date(b.created_at!).getTime() - new Date(a.created_at!).getTime()
+        );
+      } else if (dateSort === "oldest") {
+        return (
+          new Date(a.created_at!).getTime() - new Date(b.created_at!).getTime()
+        );
+      }
+      return 0;
+    });
 
     setFilteredReservations(filtered);
   }, [
@@ -99,7 +79,7 @@ const ReservationsManagementPage: React.FC = () => {
   const fetchReservations = async () => {
     try {
       const response = await axios.get("http://localhost:8000/reservations/");
-      setReservations(response.data);
+      setReservations(response.data.data);
     } catch (err) {
       setError("Erro ao carregar equipamentos.");
       setOpenSnackbar(true);
@@ -128,51 +108,21 @@ const ReservationsManagementPage: React.FC = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             sx={{ mb: 2 }}
           />
-          <Collapse in={filtersOpen} sx={{ mb: 2 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6} md={4}>
-                <FormControl fullWidth variant="outlined">
-                  <InputLabel>Filtrar por Quantidade</InputLabel>
-                  <Select
-                    value={quantityFilter}
-                    onChange={(e) => setQuantityFilter(e.target.value)}
-                    label="Filtrar por Quantidade"
-                  >
-                    <MenuItem value="">Nenhum</MenuItem>
-                    <MenuItem value="above">Acima de</MenuItem>
-                    <MenuItem value="below">Abaixo de</MenuItem>
-                    <MenuItem value="equal">Igual a</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              {quantityFilter && (
-                <Grid item xs={12} sm={6} md={4}>
-                  <TextField
-                    label="Valor da Quantidade"
-                    variant="outlined"
-                    fullWidth
-                    value={quantityFilterValue}
-                    onChange={(e) => setQuantityFilterValue(e.target.value)}
-                    type="number"
-                  />
-                </Grid>
-              )}
-              <Grid item xs={12} sm={6} md={4}>
-                <FormControl fullWidth variant="outlined">
-                  <InputLabel>Ordenar por Data</InputLabel>
-                  <Select
-                    value={dateSort}
-                    onChange={(e) => setDateSort(e.target.value)}
-                    label="Ordenar por Data"
-                  >
-                    <MenuItem value="">Nenhum</MenuItem>
-                    <MenuItem value="recent">Mais Recentes</MenuItem>
-                    <MenuItem value="oldest">Mais Antigos</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6} md={4}>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel>Ordenar por Data</InputLabel>
+                <Select
+                  value={dateSort}
+                  onChange={(e) => setDateSort(e.target.value)}
+                  label="Ordenar por Data"
+                >
+                  <MenuItem value="recent">Mais Recentes</MenuItem>
+                  <MenuItem value="oldest">Mais Antigos</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
-          </Collapse>
+          </Grid>
           <Box mt={4}>
             <ReservationsTable reservations={filteredReservations} />
           </Box>

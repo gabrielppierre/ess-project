@@ -6,4 +6,13 @@ export interface ReservationModel {
   start_date: string;
   end_date: string;
   created_at?: string;
+  user: {
+    name: string;
+    email: string;
+  };
+  room: {
+    name: string;
+    status: string;
+    occupancy: string;
+  };
 }

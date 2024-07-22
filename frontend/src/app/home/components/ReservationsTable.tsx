@@ -26,21 +26,27 @@ const ReservationTable: React.FC<ReservationTableProps> = ({
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Nome</TableCell>
-            <TableCell>Descrição</TableCell>
-            <TableCell>Quantidade</TableCell>
-            <TableCell>Criado em</TableCell>
+            <TableCell>Nome da sala</TableCell>
+            <TableCell>Nome do usuário</TableCell>
+            <TableCell>Status</TableCell>
+            <TableCell>Data inicial</TableCell>
+            <TableCell>Data final</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {reservations.length > 0 &&
             reservations.map((reservation) => (
               <TableRow key={reservation.id}>
-                <TableCell>{"nome da sala"}</TableCell>
-                <TableCell>{"descrição da sala"}</TableCell>
-                <TableCell>{"usuário que reservou"}</TableCell>
+                <TableCell>{reservation.room.name}</TableCell>
+                <TableCell>{reservation.user.name}</TableCell>
+                <TableCell>{reservation.status}</TableCell>
                 <TableCell>
-                  {new Date(reservation.created_at).toLocaleDateString()}
+                  {new Date(reservation.start_date).toLocaleDateString()} -{" "}
+                  {new Date(reservation.start_date).toLocaleTimeString()}
+                </TableCell>
+                <TableCell>
+                  {new Date(reservation.end_date).toLocaleDateString()} -{" "}
+                  {new Date(reservation.end_date).toLocaleTimeString()}
                 </TableCell>
               </TableRow>
             ))}
