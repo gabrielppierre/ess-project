@@ -1,13 +1,21 @@
 from src.schemas.response import HTTPResponses, HttpResponseModel
 from src.service.meta.reservation_service_meta import ReservationServiceMeta
 from src.db.__init__ import database as db
+import datetime
 
 class ReservationService(ReservationServiceMeta):
-  
     @staticmethod
     def get_all_reservations() -> HttpResponseModel:
         """Get all items method implementation"""
         reservations = db.get_all_items('reservations')
+
+        for reservation in reservations:
+            user = db.get_item_by_id('users', reservation['user_id'])
+            reservation['user'] = user
+
+            room = db.get_item_by_id('rooms', reservation['room_id'])
+            reservation['room'] = room
+
         if not reservations:
             return HttpResponseModel(
                 message=HTTPResponses.RESERVATION_NOT_FOUND().message,
@@ -23,10 +31,14 @@ class ReservationService(ReservationServiceMeta):
     @staticmethod
     def create_reservation(reservation: dict) -> HttpResponseModel:
         """Create item method implementation"""
+        reservation['created_at'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
         db.insert_item('reservations', reservation)
         reservations = db.get_all_items('reservations')
         return HttpResponseModel(
             message=HTTPResponses.RESERVATION_CREATED().message,
+            status_code=HTTPResponses.RESERVATION_CREATED().status_code,    
+            data=reservations,
         )
     
     @staticmethod
