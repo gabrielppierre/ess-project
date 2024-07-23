@@ -13,7 +13,7 @@ import ReservationsManagementPage from "./app/home/pages/ReservationsAdmin/Reser
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: EquipmentPage,
+    Component: HomePage,
   },
   {
     path: "/create-test",

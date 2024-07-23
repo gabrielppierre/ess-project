@@ -22,26 +22,23 @@ const EquipmentForm: React.FC<EquipmentFormProps> = ({
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
-  const [createdAt, setCreatedAt] = useState<string>("");
 
   useEffect(() => {
     if (selectedEquipment) {
       setName(selectedEquipment.name);
       setDescription(selectedEquipment.description || "");
       setAmount(selectedEquipment.amount);
-      setCreatedAt(selectedEquipment.created_at || "");  // Adicione isso
     } else {
       setName("");
       setDescription("");
       setAmount(0);
-      setCreatedAt("");  // Adicione isso
     }
   }, [selectedEquipment]);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const id = selectedEquipment ? selectedEquipment.id : generateRandomId();
-    onSubmit({ id, name, description, amount, created_at: createdAt });  // Adicione isso
+    const id = selectedEquipment ? selectedEquipment.id : generateRandomId(); // Gerar ID aleatório
+    onSubmit({ id, name, description, amount });
     setSelectedEquipment(null);
   };
 
